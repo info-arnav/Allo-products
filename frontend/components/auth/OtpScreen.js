@@ -141,7 +141,7 @@ export default function OtpScreen() {
               style={styles.hiddenInput}
             />
           </Pressable>
-        </View>{" "}
+        </View>
         {error && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>

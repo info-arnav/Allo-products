@@ -68,6 +68,7 @@ export default function LogInScreen() {
             }}
             value={phone}
             placeholder="Enter your number"
+            placeholderTextColor="#999"
             keyboardType="phone-pad"
           />
         </View>

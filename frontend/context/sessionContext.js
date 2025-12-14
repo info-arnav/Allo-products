@@ -21,8 +21,8 @@ export const SessionProvider = ({ children }) => {
     getSession()
       .then((session) => {
         if (session) {
-          setAccessToken(session.access_token);
-          setRefreshToken(session.refresh_token);
+          setAccessToken(session.accessToken);
+          setRefreshToken(session.refreshToken);
         }
         setLoggedIn(!!session);
       })

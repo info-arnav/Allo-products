@@ -41,7 +41,6 @@ export default function useFetch() {
         (data.data?.error === true || data.data?.exists === false)
       ) {
         logout();
-        navigation.navigate("Login");
         return data;
       }
 
@@ -61,7 +60,6 @@ export default function useFetch() {
 
       if (newData.error) {
         logout();
-        navigation.navigate("Login");
         return newData;
       }
 
