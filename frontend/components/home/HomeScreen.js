@@ -12,7 +12,6 @@ export default function HomeScreen() {
   useEffect(() => {
     const getInfo = async () => {
       const response = await Fetch(...getUserInfoApi());
-      console.log(response);
       setUserData(response);
     };
     getInfo();

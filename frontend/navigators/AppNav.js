@@ -3,7 +3,7 @@ import HomeScreen from "../components/home/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function AppStack() {
+export default function AppNav() {
   return (
     <Stack.Navigator
       screenOptions={{

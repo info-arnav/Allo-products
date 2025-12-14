@@ -12,8 +12,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Loading from "./components/loading/Loading";
 import { AuthProvider } from "./context/authContext";
-import AppStack from "./stacks/AppStack";
-import AuthStack from "./stacks/AuthStack";
+import AppNav from "./navigators/AppNav";
+import AuthNav from "./navigators/AuthNav";
 import { useSession } from "./context/sessionContext";
 
 SplashScreen.preventAutoHideAsync();
@@ -44,10 +44,10 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         {loggedIn && deviceId ? (
-          <AppStack />
+          <AppNav />
         ) : (
           <AuthProvider>
-            <AuthStack />
+            <AuthNav />
           </AuthProvider>
         )}
       </NavigationContainer>

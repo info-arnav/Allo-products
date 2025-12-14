@@ -4,7 +4,7 @@ import OtpScreen from "../components/auth/OtpScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function AuthStack() {
+export default function AuthNav() {
   return (
     <Stack.Navigator
       screenOptions={{
