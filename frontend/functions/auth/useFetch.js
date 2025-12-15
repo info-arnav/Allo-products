@@ -44,7 +44,7 @@ export default function useFetch() {
         return data;
       }
 
-      const refreshRes = await fetch(`${base}/auth/update-token`, {
+      const refreshRes = await fetch(`${base}/v1/auth/update-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

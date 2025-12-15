@@ -7,6 +7,7 @@ import {
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
+  Poppins_800ExtraBold,
 } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,6 +16,7 @@ import { AuthProvider } from "./context/authContext";
 import AppNav from "./navigators/AppNav";
 import AuthNav from "./navigators/AuthNav";
 import { useSession } from "./context/sessionContext";
+import RootNavigator from "./navigators/RootNavigator";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,6 +28,7 @@ export default function App() {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_700Bold,
+    Poppins_800ExtraBold,
   });
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         {loggedIn && deviceId ? (
-          <AppNav />
+          <RootNavigator />
         ) : (
           <AuthProvider>
             <AuthNav />

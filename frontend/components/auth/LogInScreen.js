@@ -70,6 +70,9 @@ export default function LogInScreen() {
             placeholder="Enter your number"
             placeholderTextColor="#999"
             keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            autoComplete="tel"
+            importantForAutofill="yes"
           />
         </View>
         {error && (
