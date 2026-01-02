@@ -250,9 +250,10 @@ export default function AddressScreen() {
                 }, 700);
               }}
               showsUserLocation={true}
-              showsMyLocationButton={true}
+              showsMyLocationButton={false}
               zoomEnabled={!isFormExpanded}
               zoomControlEnabled={!isFormExpanded}
+              showsIndoorLevelPicker={false}
               scrollEnabled={!isFormExpanded}
             />
             <View pointerEvents="none" style={styles.markContainer}>
@@ -269,6 +270,7 @@ export default function AddressScreen() {
             </View>
           </View>
         </View>
+
         {address && (
           <View
             style={{
@@ -283,16 +285,65 @@ export default function AddressScreen() {
                 : { bottom: 0, paddingBottom: insets.bottom + 24 }),
             }}
           >
-            <Text style={styles.addressTitle}>Delivering your order to</Text>
-            <Text style={styles.addressName}>
-              {address.name || address.street || ""}
-            </Text>
-            <Text style={styles.addressDetails}>
-              {address.street ? address.street + ", " : ""}
-              {address.city ? address.city + ", " : ""}
-              {address.region ? address.region + ", " : ""}
-              {address.postalCode ? address.postalCode : ""}
-            </Text>
+            {!isFormExpanded && (
+              <View style={styles.locationButtonContainer}>
+                <TouchableOpacity
+                  style={styles.currentLocationButton}
+                  onPress={async () => {
+                    try {
+                      const { status } =
+                        await Location.requestForegroundPermissionsAsync();
+                      if (status !== "granted") return;
+                      const loc = await Location.getCurrentPositionAsync({
+                        enableHighAccuracy: true,
+                        maximumAge: 10000,
+                        timeout: 10000,
+                      });
+                      const r = {
+                        latitude: loc.coords.latitude,
+                        longitude: loc.coords.longitude,
+                        latitudeDelta: 0.0015,
+                        longitudeDelta: 0.0015,
+                      };
+                      setRegion(r);
+                      if (mapRef.current) {
+                        mapRef.current.animateToRegion(r, 1000);
+                      }
+                      fetchAddressFromCoord(r.latitude, r.longitude);
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }}
+                >
+                  <Text style={styles.currentLocationButtonText}>
+                    Go to my current location
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {!isFormExpanded ? (
+              <>
+                <Text style={styles.addressTitle}>
+                  Delivering your order to
+                </Text>
+                <Text style={styles.addressName}>
+                  {address.name || address.street || ""}
+                </Text>
+                <Text style={styles.addressDetails}>
+                  {address.street ? address.street + ", " : ""}
+                  {address.city ? address.city + ", " : ""}
+                  {address.region ? address.region + ", " : ""}
+                  {address.postalCode ? address.postalCode : ""}
+                </Text>
+              </>
+            ) : (
+              <View style={styles.expandedHeader}>
+                <Text style={styles.expandedTitle}>
+                  Add more address details
+                </Text>
+              </View>
+            )}
 
             {!isFormExpanded ? (
               <TouchableOpacity
@@ -386,9 +437,6 @@ export default function AddressScreen() {
 
                   <View style={styles.inputGroup}>
                     <View style={styles.inputContainer}>
-                      <Text style={styles.inputLabelStatic}>
-                        Area / Sector / Locality *
-                      </Text>
                       <View style={styles.addressBoxContainer}>
                         <View style={styles.addressBox}>
                           <Text style={styles.addressBoxText}>
@@ -602,6 +650,43 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#46464e",
     zIndex: 50,
+  },
+  locationButtonContainer: {
+    position: "absolute",
+    top: -50,
+    left: 0,
+    right: 0,
+    height: 44,
+    zIndex: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    marginHorizontal: 20,
+    display: "flex",
+  },
+  currentLocationButton: {
+    backgroundColor: "#202023",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#46464e",
+  },
+  currentLocationButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  expandedHeader: {
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#666",
+    marginBottom: 24,
+  },
+  expandedTitle: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "600",
   },
   addressTitle: {
     color: "#999",
