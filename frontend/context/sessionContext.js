@@ -23,6 +23,7 @@ export const SessionProvider = ({ children }) => {
         if (session) {
           setAccessToken(session.accessToken);
           setRefreshToken(session.refreshToken);
+          setNumber(session.number);
         }
         setLoggedIn(!!session);
       })

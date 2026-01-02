@@ -3,15 +3,14 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Path } from "react-native-svg";
-import { Ionicons } from "@expo/vector-icons";
-import { useSession } from "../../context/sessionContext";
 import LoadingSpinner from "../loading/LoadingSpinner";
+import { useEffect } from "react";
 
-export default function ProdileScreen() {
+export default function ProfileScreen() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
-  const { phone } = useSession();
+  useEffect;
 
   return (
     <KeyboardAwareScrollView

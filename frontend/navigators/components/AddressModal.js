@@ -143,7 +143,7 @@ export default function AddressModal({
             style={styles.addAddressButton}
             onPress={() => {
               onClose();
-              navigation.navigate("AddAddress");
+              navigation.navigate("AddressStack");
             }}
           >
             <Ionicons name="add-circle-outline" size={24} color="#328616" />
