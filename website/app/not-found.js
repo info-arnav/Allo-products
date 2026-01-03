@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import styles from './error.module.css';
+import Link from "next/link";
+import styles from "./error.module.css";
 
 export default function NotFound() {
   return (
@@ -16,8 +16,8 @@ export default function NotFound() {
           <Link href="/" className={styles.primaryButton}>
             Go Home
           </Link>
-          <button 
-            onClick={() => window.history.back()} 
+          <button
+            onClick={() => window.history.back()}
             className={styles.secondaryButton}
           >
             Go Back
