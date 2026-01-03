@@ -1,0 +1,34 @@
+{
+  "name": "Allo - Your Neighborhood, Delivered",
+  "short_name": "Allo",
+  "description": "Get everything you need from local kirana stores delivered to your door in minutes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F6B215",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo-circle-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-circle.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "food", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Order Now",
+      "short_name": "Order",
+      "description": "Order on WhatsApp",
+      "url": "https://wa.me/919999999999",
+      "icons": [{ "src": "/logo-circle-128x128.png", "sizes": "128x128" }]
+    }
+  ]
+}
