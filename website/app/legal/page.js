@@ -41,12 +41,14 @@ export default function Legal() {
               {openSection === "acceptance" && (
                 <div className={styles.accordionContent}>
                   <p>
-                    By using Allo's mobile application and services, you agree to these terms. If you
-                    don't agree, please don't use our service.
+                    By using Allo's mobile application and services, you agree
+                    to these terms. If you don't agree, please don't use our
+                    service.
                   </p>
                   <p>
-                    Allo operates as a hyperlocal delivery platform through our Android and iOS apps. We reserve the right to modify 
-                    or discontinue services at any time.
+                    Allo operates as a hyperlocal delivery platform through our
+                    Android and iOS apps. We reserve the right to modify or
+                    discontinue services at any time.
                   </p>
                 </div>
               )}
@@ -70,16 +72,14 @@ export default function Legal() {
                 <div className={styles.accordionContent}>
                   <h3>What We Offer</h3>
                   <p>
-                    Allo connects you to local small-scale retailers and neighborhood
-                    shops for home delivery of groceries, essentials, and other
-                    products through our mobile app. We act as an intermediary between you and local
-                    businesses.
+                    Allo connects you to local small-scale retailers and
+                    neighborhood shops for home delivery of groceries,
+                    essentials, and other products through our mobile app. We
+                    act as an intermediary between you and local businesses.
                   </p>
 
                   <h3>Service Areas</h3>
-                  <p>
-                    Currently available in: Vasant Vihar, Delhi.
-                  </p>
+                  <p>Currently available in: Vasant Vihar, Delhi.</p>
 
                   <h3>How It Works</h3>
                   <ul>
@@ -91,8 +91,9 @@ export default function Legal() {
 
                   <h3>Service Quality</h3>
                   <p>
-                    We work to ensure product availability and timely delivery. Actual delivery times may vary based on
-                    store availability, distance, and demand.
+                    We work to ensure product availability and timely delivery.
+                    Actual delivery times may vary based on store availability,
+                    distance, and demand.
                   </p>
                 </div>
               )}
@@ -116,27 +117,28 @@ export default function Legal() {
                 <div className={styles.accordionContent}>
                   <h3>Placing Orders</h3>
                   <p>
-                    Orders are placed through the Allo mobile app. We'll confirm availability
-                    and provide real-time updates. An order is confirmed
-                    once payment is processed successfully.
+                    Orders are placed through the Allo mobile app. We'll confirm
+                    availability and provide real-time updates. An order is
+                    confirmed once payment is processed successfully.
                   </p>
 
                   <h3>Pricing</h3>
                   <p>
                     Prices are determined by the partner store and may include a
-                    delivery fee. All prices are displayed in the app before checkout.
+                    delivery fee. All prices are displayed in the app before
+                    checkout.
                   </p>
 
                   <h3>Payment Methods</h3>
                   <p>
-                    We accept UPI, credit/debit cards, and other digital payment methods
-                    through our secure payment gateway.
+                    We accept UPI, credit/debit cards, and other digital payment
+                    methods through our secure payment gateway.
                   </p>
 
                   <h3>Cancellations</h3>
                   <p>
-                    You can cancel an order before it's dispatched through the app.
-                    Once dispatched, cancellations may not be possible.
+                    You can cancel an order before it's dispatched through the
+                    app. Once dispatched, cancellations may not be possible.
                     Refunds are processed according to our refund policy.
                   </p>
                 </div>
@@ -163,21 +165,22 @@ export default function Legal() {
                   <p>
                     We aim to deliver within 30 minutes but cannot guarantee
                     exact timing. Actual delivery time depends on store
-                    availability, distance, and current demand. You can track your order
-                    in real-time through the app.
+                    availability, distance, and current demand. You can track
+                    your order in real-time through the app.
                   </p>
 
                   <h3>Delivery Area</h3>
                   <p>
-                    Delivery is available only within our service areas in Vasant Vihar. We may
-                    decline orders outside these zones.
+                    Delivery is available only within our service areas in
+                    Vasant Vihar. We may decline orders outside these zones.
                   </p>
 
                   <h3>Receiving Orders</h3>
                   <p>
                     Someone must be available at the delivery address to receive
                     the order. If no one is available, we may leave the order at
-                    your doorstep or return it to the store based on the situation.
+                    your doorstep or return it to the store based on the
+                    situation.
                   </p>
 
                   <h3>Quality Issues</h3>
@@ -331,14 +334,7 @@ export default function Legal() {
 
           <div className={styles.legalFooter}>
             <p>Questions about these terms?</p>
-            <a
-              href="https://wa.me/919999999999"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Contact us on WhatsApp
-            </a>
-            <span> or email </span>
+            <span>Email us at </span>
             <a href="mailto:info@allo.co.in">info@allo.co.in</a>
           </div>
         </div>

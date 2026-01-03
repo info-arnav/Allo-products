@@ -103,9 +103,11 @@ export default function Privacy() {
 
                   <h3>Location Permissions</h3>
                   <p>
-                    The app may request location permissions to help you find nearby stores
-                    and ensure accurate delivery. You can control these permissions in your device settings.
-                    Address information is only used for order delivery and is not shared beyond what's necessary for fulfillment.
+                    The app may request location permissions to help you find
+                    nearby stores and ensure accurate delivery. You can control
+                    these permissions in your device settings. Address
+                    information is only used for order delivery and is not
+                    shared beyond what's necessary for fulfillment.
                   </p>
                 </div>
               )}
@@ -251,14 +253,7 @@ export default function Privacy() {
 
           <div className={styles.legalFooter}>
             <p>Questions about our privacy practices?</p>
-            <a
-              href="https://wa.me/919999999999"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Contact us on WhatsApp
-            </a>
-            <span> or email </span>
+            <span>Email us at </span>
             <a href="mailto:info@allo.co.in">info@allo.co.in</a>
           </div>
         </div>

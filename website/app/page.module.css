@@ -38,6 +38,8 @@
   font-weight: 500;
   transition: all 0.2s ease;
   font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
 }
 
 .ctaButton:hover {
@@ -75,7 +77,7 @@
 }
 
 .gradient {
-  background: linear-gradient(135deg, #F6B215 0%, #FFA500 100%);
+  background: linear-gradient(135deg, #f6b215 0%, #ffa500 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -192,7 +194,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -239,8 +242,8 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--primary);
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -283,7 +286,7 @@
 .feature:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(246, 178, 21, 0.2);
-  border-color: #F6B215;
+  border-color: #f6b215;
   background: #262626;
 }
 
@@ -295,15 +298,15 @@
   width: 64px;
   height: 64px;
   border-radius: 12px;
-  background: #F6B215;
-  color: #02213E;
+  background: #f6b215;
+  color: #02213e;
   transition: all 0.3s ease;
 }
 
 .feature:hover .featureIcon {
   transform: scale(1.1);
-  background: #02213E;
-  color: #F6B215;
+  background: #02213e;
+  color: #f6b215;
 }
 
 .feature h3 {
@@ -320,16 +323,16 @@
 }
 
 .visionSection {
-  background: #FCF4E4;
-  color: #02213E;
+  background: linear-gradient(135deg, #262626 0%, #1a1a1a 100%);
+  color: var(--foreground);
   border-radius: 1.5rem;
   margin: 4rem auto;
-  border: 2px solid #F6B215;
+  border: 2px solid #f6b215;
   padding: 4rem 2rem;
 }
 
 .visionSection .sectionTitle {
-  color: #02213E !important;
+  color: var(--foreground) !important;
 }
 
 .visionContent {
@@ -341,7 +344,7 @@
   margin: 0 auto 2rem;
   max-width: 700px;
   opacity: 0.9;
-  color: #02213E;
+  color: var(--gray-600);
 }
 
 .brandGrid {
@@ -354,19 +357,19 @@
 
 .brandGrid span {
   padding: 0.75rem 1.5rem;
-  background: white;
+  background: rgba(246, 178, 21, 0.1);
   backdrop-filter: blur(10px);
   border-radius: 9999px;
   font-weight: 500;
   font-size: 1rem;
-  border: 2px solid #F6B215;
+  border: 2px solid #f6b215;
   transition: all 0.2s ease;
-  color: #02213E;
+  color: var(--foreground);
 }
 
 .brandGrid span:hover {
-  background: #F6B215;
-  color: white;
+  background: #f6b215;
+  color: var(--background);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(246, 178, 21, 0.4);
 }
@@ -375,7 +378,7 @@
   font-size: 1.5rem;
   margin: 2rem auto;
   max-width: 800px;
-  color: #02213E;
+  color: var(--foreground);
   font-weight: 600;
 }
 
@@ -385,7 +388,7 @@
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.7;
-  color: #02213E;
+  color: var(--gray-600);
 }
 
 .ctaSection {
@@ -438,6 +441,7 @@
 .footerLinks h4 {
   margin-bottom: 1rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
 .footerLinks ul {
@@ -637,14 +641,14 @@
 
 .accordionItem {
   border: 1px solid var(--gray-800);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   transition: all 0.3s ease;
-  background: var(--gray-900);
+  background: transparent;
 }
 
 .accordionItem:hover {
-  border-color: var(--gray-700);
+  border-color: var(--gray-600);
 }
 
 .accordionHeader {
@@ -660,28 +664,36 @@
   font-weight: 600;
   text-align: left;
   color: var(--foreground);
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .accordionHeader:hover {
-  background: var(--gray-800);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .accordionIcon {
   font-size: 1.5rem;
+  line-height: 1;
   font-weight: 300;
-  transition: transform 0.3s ease;
-  color: var(--gray-600);
+  transition: all 0.3s ease;
+  color: var(--gray-400);
+  min-width: 24px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .accordionIcon.open {
   transform: rotate(45deg);
+  color: var(--accent);
 }
 
 .accordionContent {
-  padding: 1.5rem 1.5rem 1.5rem;
-  color: var(--gray-300);
+  padding: 1.5rem;
+  color: var(--gray-600);
   line-height: 1.7;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .accordionContent h3 {
@@ -689,7 +701,7 @@
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
-  color: var(--foreground);
+  color: var(--accent);
 }
 
 .accordionContent h3:first-child {
@@ -698,6 +710,7 @@
 
 .accordionContent p {
   margin-bottom: 1rem;
+  color: var(--gray-600);
 }
 
 .accordionContent ul {
@@ -745,4 +758,3 @@
     padding: 0 1.25rem 1.25rem;
   }
 }
-

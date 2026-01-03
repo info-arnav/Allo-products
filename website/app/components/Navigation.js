@@ -1,10 +1,31 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import { trackAppStoreClick } from "../../lib/analytics";
 import styles from "../page.module.css";
 
 export default function Navigation() {
+  const handleDownloadClick = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      trackAppStoreClick("ios");
+      window.open("https://apps.apple.com/app/allo/id123456789", "_blank");
+    } else if (/android/i.test(userAgent)) {
+      trackAppStoreClick("android");
+      window.open(
+        "https://play.google.com/store/apps/details?id=com.allo.app",
+        "_blank"
+      );
+    } else {
+      trackAppStoreClick("android");
+      window.open(
+        "https://play.google.com/store/apps/details?id=com.allo.app",
+        "_blank"
+      );
+    }
+  };
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -19,15 +40,9 @@ export default function Navigation() {
               className={styles.navLogo}
             />
           </a>
-          <a 
-            href="https://play.google.com/store/apps/details?id=com.allo.app" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className={styles.ctaButton}
-            onClick={() => trackAppStoreClick('android')}
-          >
+          <button className={styles.ctaButton} onClick={handleDownloadClick}>
             Download App
-          </a>
+          </button>
         </div>
       </nav>
     </header>
