@@ -22,6 +22,13 @@ const UPLOAD_DIR = path.join(__dirname, "uploads");
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 // Routes and middleware
+const allowedOrigins = [
+  "https://allo.co.in",
+  "https://www.allo.co.in",
+  "https://admin.allo.co.in",
+  process.env.FRONTEND_URI,
+];
+
 app.use(
   "/v1/api/meta-data/client-chat",
   cors({
@@ -35,11 +42,11 @@ app.use(
 );
 app.use(
   cors({
-    origin: [
-      "https://digiiq.ai",
-      "https://www.digiiq.ai",
-      process.env.FRONTEND_URI,
-    ],
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Blocked by CORS"));
+    },
     credentials: true,
   })
 );
