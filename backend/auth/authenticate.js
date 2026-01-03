@@ -25,4 +25,46 @@ async function authenticate(req, res, next) {
   next();
 }
 
-module.exports = authenticate;
+async function rootAuthenticate(req, res, next) {
+  if (!req.processedUser || !req.processedUser.email) {
+    return res.status(401).json({
+      error: true,
+      code: 401,
+      message: "User authentication required",
+    });
+  }
+
+  const email = req.processedUser.email;
+
+  if (!email.endsWith("@allo.co.in")) {
+    return res.status(403).json({
+      error: true,
+      code: 403,
+      message: "Access denied. Root access required.",
+    });
+  }
+
+  next();
+}
+
+async function shopAuthenticate(req, res, next) {
+  if (!req.processedUser || !req.processedUser.userType) {
+    return res.status(401).json({
+      error: true,
+      code: 401,
+      message: "User authentication required",
+    });
+  }
+
+  if (req.processedUser.userType !== "shop") {
+    return res.status(403).json({
+      error: true,
+      code: 403,
+      message: "Access denied. Shop account required.",
+    });
+  }
+
+  next();
+}
+
+module.exports = { authenticate, rootAuthenticate, shopAuthenticate };
