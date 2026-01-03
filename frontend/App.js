@@ -13,6 +13,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import Loading from "./components/loading/Loading";
 import { AuthProvider } from "./context/authContext";
+import { DeliveryProvider } from "./context/deliveryContext";
 import AppNav from "./navigators/AppNav";
 import AuthNav from "./navigators/AuthNav";
 import { useSession } from "./context/sessionContext";
@@ -47,7 +48,9 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         {loggedIn && deviceId ? (
-          <RootNavigator />
+          <DeliveryProvider>
+            <RootNavigator />
+          </DeliveryProvider>
         ) : (
           <AuthProvider>
             <AuthNav />

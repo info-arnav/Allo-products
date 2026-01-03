@@ -43,6 +43,36 @@ exports.create = async (number) => {
   return await generator(User, user);
 };
 
+exports.addAddress = async (user_id, address) => {
+  if (!user_id || !address) {
+    return { error: true, message: "User ID and address are required" };
+  }
+
+  try {
+    await db.sequelize.query(
+      `
+      UPDATE users
+      SET addresses = array_append(COALESCE(addresses, ARRAY[]::json[]), :address::json)
+      WHERE user_id = :userId
+      `,
+      {
+        replacements: {
+          userId: user_id,
+          address: JSON.stringify(address),
+        },
+        type: db.Sequelize.QueryTypes.UPDATE,
+      }
+    );
+
+    return { error: false, message: "Address appended successfully" };
+  } catch (err) {
+    return {
+      error: true,
+      message: err.message || "Failed to append address",
+    };
+  }
+};
+
 exports.findById = async (user_id) => {
   if (!user_id) {
     return { error: true, message: "User Id is required" };

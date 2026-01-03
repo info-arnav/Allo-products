@@ -11,11 +11,12 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef } from "react";
 import Svg, { Path } from "react-native-svg";
+import { calculateDistance } from "../../functions/calculateDistance";
 
 export default function AddressModal({
   visible,
   onClose,
-  selectedAddress,
+  address,
   onSelectAddress,
   navigation,
   currentAddress,
@@ -159,26 +160,50 @@ export default function AddressModal({
                 No saved addresses found.
               </Text>
             )}
-            {userAddresses.map((addr) => (
-              <TouchableOpacity
-                key={addr.id}
-                style={styles.addressCard}
-                onPress={() => {
-                  onSelectAddress(addr);
-                  onClose();
-                }}
-              >
-                <View style={styles.addressHeader}>
-                  <Text style={styles.addressName}>{addr.name}</Text>
-                  {selectedAddress?.id === addr.id && (
-                    <Text style={styles.youAreHere}>You are here</Text>
-                  )}
-                </View>
-                <Text style={styles.addressDetails}>
-                  {addr.street}, {addr.city}, {addr.pincode}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            {userAddresses.map((addr, index) => {
+              let distance = null;
+              if (
+                currentAddress &&
+                currentAddress.latitude &&
+                currentAddress.longitude &&
+                addr.latitude &&
+                addr.longitude
+              ) {
+                distance = calculateDistance(
+                  parseFloat(currentAddress.latitude),
+                  parseFloat(currentAddress.longitude),
+                  parseFloat(addr.latitude),
+                  parseFloat(addr.longitude)
+                );
+              }
+
+              return (
+                <TouchableOpacity
+                  key={addr.id || `${addr.latitude}-${addr.longitude}-${index}`}
+                  style={styles.addressCard}
+                  onPress={() => {
+                    onSelectAddress(addr);
+                    onClose();
+                  }}
+                >
+                  <View style={styles.addressHeader}>
+                    <Text style={styles.addressName} numberOfLines={1}>
+                      {addr.name}
+                    </Text>
+                    {distance !== null && (
+                      <Text style={styles.distanceText}>
+                        {distance < 0.1
+                          ? `${Math.round(distance * 1000)} m`
+                          : `${distance.toFixed(1)} km`}
+                      </Text>
+                    )}
+                  </View>
+                  <Text style={styles.addressDetails} numberOfLines={2}>
+                    {addr.street}, {addr.city}, {addr.pincode}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
         </Animated.View>
       </View>
@@ -298,6 +323,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
   },
+
   addressHeader: {
     flexDirection: "row",
     alignItems: "center",
@@ -308,11 +334,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginRight: 8,
+    flex: 1,
   },
-  youAreHere: {
-    color: "#328616",
+  distanceText: {
+    color: "#999",
     fontSize: 12,
-    fontWeight: "600",
+    fontWeight: "500",
   },
   addressDetails: {
     color: "#999",

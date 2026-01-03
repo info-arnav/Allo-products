@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AddressModal from "./AddressModal";
 import { useDelivery } from "../../context/deliveryContext";
 import { isLocationGranted } from "../../permissions/isLocationGranted";
 import { getCurrentLocation } from "../../permissions/getCurrentLocation";
 import { calculateDistance } from "../../functions/calculateDistance";
+import useFetch from "../../functions/auth/useFetch";
+import { getUserInfoApi } from "../../services/useFetch/user";
 
 export default function Header() {
   const navigation = useNavigation();
   const [showDropdown, setShowDropdown] = useState(false);
+  const Fetch = useFetch();
 
   const [loadingAddress, setLoadingAddress] = useState(true);
   const [currentAddress, setCurrentAddress] = useState(null);
@@ -34,81 +37,86 @@ export default function Header() {
     }
   };
 
-  useEffect(() => {
-    const checkAndSetLocation = async () => {
-      if (loadingAddress === false) return;
-      else if (address && address.name) {
-        setLoadingAddress(false);
-      } else if (!address || !address.name) {
+  useFocusEffect(
+    useCallback(() => {
+      const fetchAddresses = async () => {
         try {
           const response = await Fetch(...getUserInfoApi());
 
+          if (response.data && response.data.addresses) {
+            setUserAddresses(response.data.addresses);
+          }
+        } catch (error) {}
+      };
+
+      fetchAddresses();
+    }, [])
+  );
+
+  useEffect(() => {
+    const checkAndSetLocation = async () => {
+      if (address && address.name) {
+        setLoadingAddress(false);
+        return;
+      }
+
+      try {
+        const hasPermission = await isLocationGranted();
+
+        if (!hasPermission) {
+          setCurrentAddress(false);
+        }
+
+        if (hasPermission) {
+          const locationData = currentAddress || (await saveCurrentLocation());
+
+          let closestAddress = null;
+          let minDistance = 1;
+
+          const response = await Fetch(...getUserInfoApi());
           let tempUserAddresses = [];
 
           if (response.data && response.data.addresses) {
             tempUserAddresses = response.data.addresses;
-            setUserAddresses(tempUserAddresses);
           }
 
-          const hasPermission = await isLocationGranted();
-
-          if (!hasPermission) {
-            setCurrentAddress(false);
-          }
-
-          if (hasPermission) {
-            const locationData =
-              currentAddress || (await saveCurrentLocation());
-
-            let closestAddress = null;
-            let minDistance = 1;
-
-            if (!tempUserAddresses || tempUserAddresses.length === 0) {
-              setAddress({
-                id: 0,
-                name: "Current Location",
-                ...locationData,
-              });
-              setLoadingAddress(false);
-              return;
-            }
-
-            tempUserAddresses.forEach((addr) => {
-              if (addr.latitude && addr.longitude) {
-                const distance = calculateDistance(
-                  locationData.latitude,
-                  locationData.longitude,
-                  addr.latitude,
-                  addr.longitude
-                );
-                if (distance < minDistance) {
-                  minDistance = distance;
-                  closestAddress = addr;
-                }
-              }
-            });
-
-            if (closestAddress) {
-              setAddress(closestAddress);
-              setLoadingAddress(false);
-              return;
-            }
-
+          if (!tempUserAddresses || tempUserAddresses.length === 0) {
             setAddress({
               id: 0,
               name: "Current Location",
               ...locationData,
             });
-          } else {
-            setAddress({
-              id: -1,
-              name: "Saket",
-              street: "Select Colony, Near Metro Station",
-              city: "Delhi",
-              pincode: "110017",
-            });
+            setLoadingAddress(false);
+            return;
           }
-        } catch (error) {
+
+          tempUserAddresses.forEach((addr) => {
+            if (addr.latitude && addr.longitude) {
+              const distance = calculateDistance(
+                locationData.latitude,
+                locationData.longitude,
+                addr.latitude,
+                addr.longitude
+              );
+              if (distance < minDistance) {
+                minDistance = distance;
+                closestAddress = addr;
+              }
+            }
+          });
+
+          if (closestAddress) {
+            setAddress(closestAddress);
+            setLoadingAddress(false);
+            return;
+          }
+
+          setAddress({
+            id: 0,
+            name: "Current Location",
+            ...locationData,
+          });
+        } else {
           setAddress({
             id: -1,
             name: "Saket",
@@ -117,15 +125,19 @@ export default function Header() {
             pincode: "110017",
           });
         }
-        setLoadingAddress(false);
+      } catch (error) {
+        setAddress({
+          id: -1,
+          name: "Saket",
+          street: "Select Colony, Near Metro Station",
+          city: "Delhi",
+          pincode: "110017",
+        });
       }
+      setLoadingAddress(false);
     };
 
     checkAndSetLocation();
-
-    if (currentAddress == null) {
-      saveCurrentLocation();
-    }
   }, []);
 
   return (
@@ -143,7 +155,7 @@ export default function Header() {
           >
             <Ionicons name="location" size={16} color="#fff" />
             <View style={styles.addressInfo}>
-              <Text style={styles.addressName}>
+              <Text style={styles.addressName} numberOfLines={1}>
                 {loadingAddress
                   ? "Loading..."
                   : address?.name || "Select Address"}
