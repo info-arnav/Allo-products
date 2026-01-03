@@ -90,11 +90,11 @@ app.use("/v1", v1Routes);
 
 // Error handlers
 app.use(function fourOhFourHandler(req, res) {
-  res.redirect(302, "https://www.digiiq.ai/404");
+  res.redirect(302, "https://www.allo.co.in/404");
 });
 app.use(function fiveHundredHandler(err, req, res, next) {
   console.error(err);
-  res.redirect(302, "https://www.digiiq.ai/500");
+  res.redirect(302, "https://www.allo.co.in/500");
 });
 
 app.listen(process.env.PORT, function (err) {
