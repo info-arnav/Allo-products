@@ -3,24 +3,31 @@
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./page.module.css";
+import SessionLoader from "@/components/auth/SessionLoader";
+import NonProtectedRoute from "@/components/auth/NonProtectedRoute";
 
-export default function Home() {
+function Home() {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    const formData = new FormData(e.target);
-    const email = formData.get("email");
 
     if (!email.endsWith("@allo.co.in")) {
       setError("Only @allo.co.in email addresses are allowed");
       return;
     }
 
-    console.log("Form submitted", { email });
+    // TODO: Implement API call for authentication
+    if (isLogin) {
+      // Login logic
+    } else {
+      // Signup logic
+    }
   };
 
   return (
@@ -64,17 +71,20 @@ export default function Home() {
                   type="text"
                   id="name"
                   placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
             )}
-            name="email"
             <div className={styles.formGroup}>
               <label htmlFor="email">Email Address</label>
               <input
                 type="email"
                 id="email"
                 placeholder="you@allo.co.in"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -84,6 +94,8 @@ export default function Home() {
                 type="password"
                 id="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -122,5 +134,15 @@ export default function Home() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <SessionLoader noLoading={true}>
+      <NonProtectedRoute>
+        <Home></Home>
+      </NonProtectedRoute>
+    </SessionLoader>
   );
 }

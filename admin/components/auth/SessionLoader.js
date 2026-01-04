@@ -3,7 +3,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import useUpdate from "../api/useUpdate";
 import { UserContext } from "@/contexts/UserContext";
-import NavLoading from "../navigation/NavLoading";
 import Loading from "@/components/loading/Loading";
 
 export default function SessionLoader({ children, ...props }) {
@@ -12,7 +11,7 @@ export default function SessionLoader({ children, ...props }) {
   const [loaded, setLoaded] = useState(false);
   const hasRun = useRef(false);
 
-  const { isNavbar = false, noLoading = false } = props;
+  const { noLoading = false } = props;
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -58,12 +57,10 @@ export default function SessionLoader({ children, ...props }) {
   }, []);
 
   if (!loaded) {
-    if (isNavbar) {
-      return <NavLoading></NavLoading>;
-    } else if (noLoading) {
+    if (noLoading) {
       return null;
     }
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   return children;

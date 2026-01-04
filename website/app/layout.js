@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import GoogleAnalytics from "./components/GoogleAnalytics";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title:
-    "Allo - Local Stores Delivered | Hyperlocal Commerce in Vasant Vihar",
+  title: "Allo - Local Stores Delivered | Hyperlocal Commerce in Vasant Vihar",
   description:
     "Download the Allo app and get everything you need from local stores in Vasant Vihar delivered in minutes. Support small-scale retailers while enjoying fast delivery. Available on Android and iOS.",
   keywords:
@@ -79,7 +78,6 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#F6B215" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <GoogleAnalytics GA_MEASUREMENT_ID="G-GLYXD2SJN6" />
         {children}
         <digiiq-chatbot agent-id="9ecd59b2-4c7c-4e7f-a7ee-7501fb493729"></digiiq-chatbot>
         <script
@@ -88,6 +86,7 @@ export default function RootLayout({ children }) {
           type="text/javascript"
         ></script>
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
     </html>
   );
 }

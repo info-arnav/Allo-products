@@ -1,24 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { trackAppStoreClick } from "../../lib/analytics";
 import styles from "../page.module.css";
+import { AddEvent } from "@/components/analytics/google";
 
 export default function Navigation() {
   const handleDownloadClick = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      trackAppStoreClick("ios");
+      AddEvent("app_store_click", { platform: "ios", location: "nav" });
       window.open("https://apps.apple.com/app/allo/id123456789", "_blank");
     } else if (/android/i.test(userAgent)) {
-      trackAppStoreClick("android");
+      AddEvent("app_store_click", { platform: "android", location: "nav" });
       window.open(
         "https://play.google.com/store/apps/details?id=com.allo.app",
         "_blank"
       );
     } else {
-      trackAppStoreClick("android");
+      AddEvent("app_store_click", { platform: "android", location: "nav" });
       window.open(
         "https://play.google.com/store/apps/details?id=com.allo.app",
         "_blank"

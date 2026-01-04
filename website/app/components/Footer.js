@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import Image from "next/image";
-import { trackWhatsAppClick, trackAppStoreClick } from "../../lib/analytics";
 import styles from "../page.module.css";
+import { AddEvent } from "@/components/analytics/google";
 
 export default function Footer() {
   return (
@@ -27,15 +27,47 @@ export default function Footer() {
           <div>
             <h4>Download App</h4>
             <ul>
-              <li><a href="https://play.google.com/store/apps/details?id=com.allo.app" target="_blank" rel="noopener noreferrer" onClick={() => trackAppStoreClick('android')}>Android App</a></li>
-              <li><a href="https://apps.apple.com/app/allo/id123456789" target="_blank" rel="noopener noreferrer" onClick={() => trackAppStoreClick('ios')}>iOS App</a></li>
+              <li>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.allo.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    AddEvent("app_store_click", {
+                      platform: "android",
+                      location: "footer",
+                    })
+                  }
+                >
+                  Android App
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://apps.apple.com/app/allo/id123456789"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    AddEvent("app_store_click", {
+                      platform: "ios",
+                      location: "footer",
+                    })
+                  }
+                >
+                  iOS App
+                </a>
+              </li>
             </ul>
           </div>
           <div>
             <h4>Legal</h4>
             <ul>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/legal">Terms of Service</a></li>
+              <li>
+                <a href="/privacy">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="/legal">Terms of Service</a>
+              </li>
             </ul>
           </div>
         </div>

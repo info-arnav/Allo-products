@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
-import { trackAppStoreClick } from "../lib/analytics";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import { AddEvent } from "@/components/analytics/google";
 
 export default function Home() {
   const jsonLd = {
@@ -56,7 +56,12 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.appButton}
-                    onClick={() => trackAppStoreClick("android")}
+                    onClick={() =>
+                      AddEvent("app_store_click", {
+                        platform: "android",
+                        location: "hero",
+                      })
+                    }
                   >
                     <svg
                       width="24"
@@ -76,7 +81,12 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.appButton}
-                    onClick={() => trackAppStoreClick("ios")}
+                    onClick={() =>
+                      AddEvent("app_store_click", {
+                        platform: "ios",
+                        location: "hero",
+                      })
+                    }
                   >
                     <svg
                       width="24"
@@ -331,7 +341,12 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.appButton}
-                onClick={() => trackAppStoreClick("android")}
+                onClick={() =>
+                  AddEvent("app_store_click", {
+                    platform: "android",
+                    location: "cta",
+                  })
+                }
               >
                 <svg
                   width="24"
@@ -351,7 +366,12 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.appButton}
-                onClick={() => trackAppStoreClick("ios")}
+                onClick={() =>
+                  AddEvent("app_store_click", {
+                    platform: "ios",
+                    location: "cta",
+                  })
+                }
               >
                 <svg
                   width="24"
