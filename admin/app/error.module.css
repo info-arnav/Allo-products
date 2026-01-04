@@ -1,0 +1,87 @@
+.errorContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 42rem;
+}
+
+.errorCode {
+  font-size: 8rem;
+  font-weight: bold;
+  background: linear-gradient(to bottom right, #f6b215, #ffc940);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.errorTitle {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.errorDescription {
+  font-size: 1.125rem;
+  color: #a3a3a3;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.errorActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: #f6b215;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.primaryButton:hover {
+  background: #ffc940;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: #000000;
+  color: white;
+  border: 1px solid #333333;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(246, 178, 21, 0.3);
+  border-color: #f6b215;
+}

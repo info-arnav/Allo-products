@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Prevent all search engines from indexing this admin portal
+# This is an internal employee-only application
