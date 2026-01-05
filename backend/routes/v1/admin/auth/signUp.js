@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
   );
 
   if (mailResponse.error) {
-    return res.status(500).json(otpResponse);
+    return res.status(500).json(mailResponse);
   }
 
   const sessionData = await sessions.createWithEmail(
