@@ -10,9 +10,19 @@ module.exports = (sequelize, Sequelize) => {
       },
       number: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         validate: { isNumeric: true },
+      },
+      password: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      email: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        unique: true,
+        validate: { isEmail: true },
       },
       image: {
         type: Sequelize.TEXT,
@@ -38,6 +48,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      type: {
+        type: Sequelize.TEXT,
+        defaultValue: "user",
+      },
+      verified: { type: Sequelize.BOOLEAN, defaultValue: false },
       addresses: { type: Sequelize.ARRAY(Sequelize.JSON), allowNull: true },
     },
     { timestamps: true }

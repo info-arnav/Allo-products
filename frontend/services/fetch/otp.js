@@ -1,6 +1,6 @@
 export const requestOtpApi = (number) => {
   return [
-    `${process.env.EXPO_PUBLIC_API_URL}/v1/auth/request-otp`,
+    `${process.env.EXPO_PUBLIC_API_URL}/v1/user/auth/request-otp`,
     {
       method: "POST",
       headers: {
@@ -16,7 +16,7 @@ export const requestOtpApi = (number) => {
 
 export const verifyOtpApi = (number, otp, deviceId) => {
   return [
-    `${process.env.EXPO_PUBLIC_API_URL}/v1/auth/verify-otp`,
+    `${process.env.EXPO_PUBLIC_API_URL}/v1/user/auth/verify-otp`,
     {
       method: "POST",
       headers: {

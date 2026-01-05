@@ -30,17 +30,6 @@ const allowedOrigins = [
 ];
 
 app.use(
-  "/v1/api/meta-data/client-chat",
-  cors({
-    origin: "*",
-    credentials: false,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  })
-);
-app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);

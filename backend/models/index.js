@@ -21,6 +21,10 @@ db.sequelize = sequelize;
 db.users = require("./personal/user.model.js")(sequelize, Sequelize);
 db.otps = require("./auth/otp.model.js")(sequelize, Sequelize);
 db.sessions = require("./auth/session.model.js")(sequelize, Sequelize);
+db.verifications = require("./auth/verification.model.js")(
+  sequelize,
+  Sequelize
+);
 
 require("./associations")(db);
 

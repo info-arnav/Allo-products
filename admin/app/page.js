@@ -1,32 +1,106 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./page.module.css";
 import SessionLoader from "@/components/auth/SessionLoader";
 import NonProtectedRoute from "@/components/auth/NonProtectedRoute";
+import { generateFingerPrint } from "@/components/auth/getFingerprint";
+import { signInApi, signUpApi } from "@/services/fetch/client/auth";
+import { validatePassword } from "@/components/auth/validatePassword";
+import { UserContext } from "@/contexts/UserContext";
+import { useRouter } from "next/navigation";
+import AddEvent from "@/components/analytics/google";
+import { setCookie } from "@/components/cookies/manageCookies";
 
 function Home() {
+  const router = useRouter();
+
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const { user, setUser } = useContext(UserContext);
+
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setSubmit(true);
     setError("");
+    AddEvent("register_submitted", {
+      page_path: window.location.pathname,
+      page_title: document.title,
+    });
 
-    if (!email.endsWith("@allo.co.in")) {
-      setError("Only @allo.co.in email addresses are allowed");
+    const passwordCheck = validatePassword(password);
+    if (!passwordCheck.isValid) {
+      setLoading(false);
+      setSubmit(false);
+      setError(passwordCheck.error);
       return;
     }
 
-    // TODO: Implement API call for authentication
-    if (isLogin) {
-      // Login logic
+    if (password != confirmPassword) {
+      setLoading(false);
+      setSubmit(false);
+      setError("Passwords do not match");
+      return;
+    }
+
+    const [fingerprint, uuid] = generateFingerPrint();
+    let res = await fetch(...signUpApi(fingerprint, email, password))
+      .then((data) => {
+        return data.json();
+      })
+      .catch((err) => {
+        return { error: true, message: "Internal server error" };
+      });
+    if (res.error) {
+      setError(res.message);
+      setLoading(false);
+      setSubmit(false);
     } else {
-      // Signup logic
+      setCookie("UUID_V4", uuid);
+      sessionStorage.setItem("tk", res.data.access_token);
+      delete res.data.access_token;
+      localStorage.setItem("uid", btoa(JSON.stringify(res.data)));
+      setUser(res.data);
+      router.push("/dashboard");
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSubmit(true);
+    setError("");
+    AddEvent("login_submitted", {
+      page_path: window.location.pathname,
+      page_title: document.title,
+    });
+    const [fingerprint, uuid] = generateFingerPrint();
+    let res = await fetch(...signInApi(fingerprint, email, password))
+      .then((data) => {
+        return data.json();
+      })
+      .catch((err) => {
+        return { error: true, message: "Internal server error" };
+      });
+    if (res.error) {
+      setError(res.message);
+      setLoading(false);
+      setSubmit(false);
+    } else {
+      setCookie("UUID_V4", uuid);
+      sessionStorage.setItem("tk", res.data.access_token);
+      delete res.data.access_token;
+      localStorage.setItem("uid", btoa(JSON.stringify(res.data)));
+      setUser(res.data);
+      router.push("/dashboard");
     }
   };
 
@@ -63,20 +137,10 @@ function Home() {
 
           {error && <div className={styles.errorMessage}>{error}</div>}
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            {!isLogin && (
-              <div className={styles.formGroup}>
-                <label htmlFor="name">Full Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Enter your full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
-            )}
+          <form
+            className={styles.form}
+            onSubmit={isLogin ? handleLogin : handleRegister}
+          >
             <div className={styles.formGroup}>
               <label htmlFor="email">Email Address</label>
               <input
@@ -99,19 +163,37 @@ function Home() {
                 required
               />
             </div>
+            {!isLogin && (
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
             {isLogin && (
               <div className={styles.formOptions}>
                 <label className={styles.checkbox}>
                   <input type="checkbox" />
                   <span>Remember me</span>
                 </label>
-                <a href="#" className={styles.forgotLink}>
-                  Forgot password?
-                </a>
               </div>
             )}
-            <button type="submit" className={styles.submitButton}>
-              {isLogin ? "Sign In" : "Create Account"}
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={loading || submit}
+            >
+              {loading
+                ? "Processing..."
+                : isLogin
+                ? "Sign In"
+                : "Create Account"}
             </button>
           </form>
 

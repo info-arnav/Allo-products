@@ -1,0 +1,27 @@
+const express = require("express");
+const router = express.Router();
+
+const sessions = require("../../../../controllers/session.controller.js");
+
+router.post("/", async (req, res) => {
+  if (!req.cookies.refresh_token || !req.headers["x-device-fingerprint"]) {
+    return res.status(401).json({
+      error: true,
+      code: 400,
+      message: "Required details are not provided",
+    });
+  }
+
+  const { refresh_token } = req.cookies;
+
+  let fingerprint = req.headers["x-device-fingerprint"];
+
+  let data = await sessions.deleteWithFingerPrint(refresh_token, fingerprint);
+
+  if (data.error) {
+    return res.status(400).json(data);
+  }
+  return res.status(200).json(data);
+});
+
+module.exports = router;

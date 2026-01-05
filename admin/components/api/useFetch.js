@@ -39,7 +39,7 @@ export default function useFetch() {
       ) {
         localStorage.removeItem("uid");
         sessionStorage.removeItem("tk");
-        router.push("/login", { replace: true });
+        router.push("/", { replace: true });
         window.location.reload();
         return data;
       }
@@ -62,7 +62,7 @@ export default function useFetch() {
       if (newData.error) {
         localStorage.removeItem("uid");
         sessionStorage.removeItem("tk");
-        router.push("/login", { replace: true });
+        router.push("/", { replace: true });
         window.location.reload();
         return newData;
       }

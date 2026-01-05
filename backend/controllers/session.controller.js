@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const Session = db.sessions;
 const { col, where, Op } = db.Sequelize;
 
-exports.create = async (number, device_id, user_id) => {
+exports.createWithNumber = async (number, device_id, user_id) => {
   if (!number || !device_id || !user_id) {
     return { error: true, message: "Credentials are required" };
   }
@@ -30,7 +30,41 @@ exports.create = async (number, device_id, user_id) => {
   return data;
 };
 
-exports.delete = async (refresh_token, device_id) => {
+exports.createWithEmail = async (email, fingerprint, user_id) => {
+  if (!email || !fingerprint || !user_id) {
+    return { error: true, message: "Credentials are required" };
+  }
+
+  const session = {
+    email: email,
+    fingerprint: fingerprint,
+    user_id: user_id,
+  };
+
+  const data = await generator(Session, session);
+  const raw = data.data?.get?.({ plain: true }) || data.data;
+
+  if (!raw || !raw.fingerprint) {
+    return {
+      error: true,
+      message: "Some error occurred while creating session",
+    };
+  }
+
+  delete raw.fingerprint;
+
+  raw.access_token = jwt.sign(
+    { user_id: user_id, fingerprint: fingerprint },
+    process.env.ACCESS_SECRET,
+    { expiresIn: "15m" }
+  );
+
+  data.data = raw;
+
+  return data;
+};
+
+exports.deleteWithDeviceId = async (refresh_token, device_id) => {
   if (!refresh_token || !device_id) {
     return { error: true, message: "Number and Device ID are required" };
   }
@@ -53,7 +87,69 @@ exports.delete = async (refresh_token, device_id) => {
     });
 };
 
-exports.validateAccessToken = async (access_token, device_id) => {
+exports.deleteWithFingerPrint = async (refresh_token, fingerprint) => {
+  if (!refresh_token || !fingerprint) {
+    return { error: true, message: "Email and Fingerprint are required" };
+  }
+
+  const query = {
+    where: {
+      [Op.and]: [
+        where(col("refresh_token"), "=", refresh_token),
+        where(col("fingerprint"), "=", fingerprint),
+      ],
+    },
+  };
+
+  return await Session.destroy(query)
+    .then(() => {
+      return { error: false };
+    })
+    .catch((err) => {
+      return { error: true, message: err };
+    });
+};
+
+exports.validateAccessTokenWithFingerprint = async (
+  access_token,
+  fingerprint
+) => {
+  if (!access_token || !fingerprint) {
+    return { error: true, message: "Token or fingerprint missing" };
+  }
+
+  try {
+    const decoded = jwt.verify(access_token, process.env.ACCESS_SECRET);
+
+    if (decoded.fingerprint !== fingerprint) {
+      return {
+        error: false,
+        exists: true,
+        expired: true,
+        message: "Fingerprint mismatch",
+      };
+    }
+
+    return {
+      error: false,
+      exists: true,
+      expired: false,
+      user_id: decoded.user_id,
+    };
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return { error: false, exists: true, expired: true };
+    } else {
+      return {
+        error: true,
+        message: "Invalid token",
+        exists: false,
+      };
+    }
+  }
+};
+
+exports.validateAccessTokenWithDeviceId = async (access_token, device_id) => {
   if (!access_token || !device_id) {
     return { error: true, message: "Token or device ID missing" };
   }
@@ -89,7 +185,7 @@ exports.validateAccessToken = async (access_token, device_id) => {
   }
 };
 
-exports.updateAccessToken = async (refresh_token, device_id) => {
+exports.updateAccessTokenWithDeviceId = async (refresh_token, device_id) => {
   if (!refresh_token || !device_id) {
     return { error: true, message: "Some details are missing" };
   }
@@ -112,7 +208,44 @@ exports.updateAccessToken = async (refresh_token, device_id) => {
         return { error: true, exists: true, expired: true };
       }
 
-      return this.create(data.number, device_id, data.user_id);
+      return this.createWithNumber(data.number, device_id, data.user_id);
+    })
+    .catch((err) => {
+      return {
+        error: true,
+        message: err.message || "Some error occurred while updating the Token.",
+      };
+    });
+};
+
+exports.updateAccessTokenWithFingerPrint = async (
+  refresh_token,
+  fingerprint,
+  oldFingerprint
+) => {
+  if (!refresh_token || !fingerprint || !oldFingerprint) {
+    return { error: true, message: "Some details are missing" };
+  }
+
+  const query = {
+    where: {
+      [Op.and]: [
+        where(col("refresh_token"), "=", refresh_token),
+        where(col("fingerprint"), "=", oldFingerprint),
+      ],
+    },
+  };
+
+  return await Session.findOne(query)
+    .then(async (data) => {
+      if (data == null) {
+        return { error: true, exists: false };
+      } else if (data.refresh_token_expires_at < new Date()) {
+        this.delete(refresh_token, oldFingerprint);
+        return { error: true, exists: true, expired: true };
+      }
+
+      return this.createWithEmail(data.email, fingerprint, data.user_id);
     })
     .catch((err) => {
       return {

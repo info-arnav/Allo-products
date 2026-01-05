@@ -4,8 +4,13 @@ module.exports = (sequelize, Sequelize) => {
     {
       number: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: { isNumeric: true },
+      },
+      email: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+        validate: { isEmail: true },
       },
       user_id: {
         type: Sequelize.UUID,
@@ -19,7 +24,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       device_id: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
+      },
+      fingerprint: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       refresh_token_expires_at: {
         type: Sequelize.DATE,

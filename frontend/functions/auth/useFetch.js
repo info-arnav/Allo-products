@@ -1,10 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import { useSession } from "../../context/sessionContext";
 import useLogout from "./useLogout";
 import { saveSession } from "./saveSession";
 
 export default function useFetch() {
-  const navigation = useNavigation();
   const {
     deviceId,
     setAccessToken,
@@ -44,7 +42,7 @@ export default function useFetch() {
         return data;
       }
 
-      const refreshRes = await fetch(`${base}/v1/auth/update-token`, {
+      const refreshRes = await fetch(`${base}/v1/user/auth/update-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

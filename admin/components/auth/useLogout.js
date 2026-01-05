@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { getFingerPrint } from "./getFingerprint";
 import { logoutApi } from "@/services/fetch/client/auth";
-import { AddEvent } from "../analytics/google";
+import AddEvent from "../analytics/google";
 
 export default function useLogout() {
   const old_fingerprint = getFingerPrint();
@@ -20,13 +20,13 @@ export default function useLogout() {
       if (!data.error) {
         localStorage.removeItem("uid");
         sessionStorage.removeItem("tk");
-        router.push("/login", { replace: true });
+        router.push("/", { replace: true });
         window.location.reload();
       } else {
         console.log("Error logging out");
         localStorage.removeItem("uid");
         sessionStorage.removeItem("tk");
-        router.push("/login", { replace: true });
+        router.push("/", { replace: true });
         window.location.reload();
       }
       return data;

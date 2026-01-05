@@ -3,7 +3,7 @@ const generator = require("./components/generator");
 const User = db.users;
 const { fn, col, where } = db.Sequelize;
 
-exports.findOne = async (number) => {
+exports.findOneWithNumber = async (number) => {
   if (!number) {
     return { error: true, message: "Number is required" };
   }
@@ -25,12 +25,34 @@ exports.findOne = async (number) => {
     });
 };
 
-exports.create = async (number) => {
+exports.findOneWithEmail = async (email) => {
+  if (!email) {
+    return { error: true, message: "Email is required" };
+  }
+
+  const query = {
+    where: where(fn("LOWER", col("email")), "=", email.toLowerCase()),
+  };
+
+  return await User.findOne(query)
+    .then((data) => {
+      return { error: false, data: data };
+    })
+    .catch((err) => {
+      return {
+        error: true,
+        message:
+          err.message || "Some error occurred while searching for the User.",
+      };
+    });
+};
+
+exports.createWithNumber = async (number, type = "user") => {
   if (!number) {
     return { error: true, message: "Number is required" };
   }
 
-  const res = await this.findOne(number);
+  const res = await this.findOneWithNumber(number);
 
   if (!res.error && res.data) {
     return { error: false, data: res.data };
@@ -38,6 +60,23 @@ exports.create = async (number) => {
 
   const user = {
     number: number,
+    verified: true,
+    type: type,
+  };
+
+  return await generator(User, user);
+};
+
+exports.createWithEmail = async (email, password, type = "admin") => {
+  if (!email) {
+    return { error: true, message: "Email is required" };
+  }
+
+  const user = {
+    email: email,
+    password: password,
+    verified: false,
+    type: type,
   };
 
   return await generator(User, user);
@@ -109,6 +148,28 @@ exports.update = async (user_id, changes) => {
   try {
     await User.update(changes, query);
     return { error: false, message: "User updated successfully" };
+  } catch (err) {
+    return {
+      error: true,
+      message: err,
+    };
+  }
+};
+
+exports.delete = async (user_id) => {
+  if (!user_id) {
+    return { error: true, message: "User ID is required" };
+  }
+
+  const query = {
+    where: {
+      user_id: user_id,
+    },
+  };
+
+  try {
+    await User.destroy(query);
+    return { error: false, message: "User deleted successfully" };
   } catch (err) {
     return {
       error: true,

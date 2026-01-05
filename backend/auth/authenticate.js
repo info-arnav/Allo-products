@@ -1,4 +1,5 @@
 const sessions = require("../controllers/session.controller.js");
+const users = require("../controllers/user.controller.js");
 
 async function authenticate(req, res, next) {
   if (!req.headers.authorization.split(" ")[1] || !req.headers["x-device-id"]) {
@@ -12,7 +13,10 @@ async function authenticate(req, res, next) {
   let deviceId = req.headers["x-device-id"];
   let access_token = req.headers.authorization.split(" ")[1];
 
-  let data = await sessions.validateAccessToken(access_token, deviceId);
+  let data = await sessions.validateAccessTokenWithDeviceId(
+    access_token,
+    deviceId
+  );
 
   if (data.error || data.expired) {
     return res
@@ -26,6 +30,41 @@ async function authenticate(req, res, next) {
 }
 
 async function rootAuthenticate(req, res, next) {
+  if (
+    !req.headers.authorization.split(" ")[1] ||
+    !req.headers["x-device-fingerprint"]
+  ) {
+    return res.status(401).json({
+      error: true,
+      code: 401,
+      message: "Required credentials not provided",
+    });
+  }
+
+  let fingerprint = req.headers["x-device-fingerprint"];
+  let access_token = req.headers.authorization.split(" ")[1];
+
+  let data = await sessions.validateAccessTokenWithFingerprint(
+    access_token,
+    fingerprint
+  );
+
+  if (data.error || data.expired) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Access Denied", data: data });
+  }
+
+  const userData = await users.findById(data.user_id);
+
+  if (userData.error) {
+    return res
+      .status(500)
+      .json({ error: true, message: "User fetch failed", data: userData });
+  }
+
+  req.processedUser = userData.data;
+
   if (!req.processedUser || !req.processedUser.email) {
     return res.status(401).json({
       error: true,

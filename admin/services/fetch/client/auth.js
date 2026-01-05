@@ -1,21 +1,6 @@
-export const googleLoginApi = (fingerprint, code) => {
-  return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/google-sign-in`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Device-Fingerprint": fingerprint,
-      },
-      credentials: "include",
-      body: JSON.stringify({ code: code }),
-    },
-  ];
-};
-
 export const signInApi = (fingerprint, email, password) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/sign-in`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/sign-in`,
     {
       method: "POST",
       headers: {
@@ -30,7 +15,7 @@ export const signInApi = (fingerprint, email, password) => {
 
 export const signUpApi = (fingerprint, email, password) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/sign-up`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/sign-up`,
     {
       method: "POST",
       headers: {
@@ -45,7 +30,7 @@ export const signUpApi = (fingerprint, email, password) => {
 
 export const revokeTokenApi = (fingerprint, refresh_token) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/revoke-token-body`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/revoke-token-body`,
     {
       method: "POST",
       headers: {
@@ -60,7 +45,7 @@ export const revokeTokenApi = (fingerprint, refresh_token) => {
 
 export const updateTokenApi = (old_fingerprint, new_fingerprint) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/update-token`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/update-token`,
     {
       method: "POST",
       headers: {
@@ -75,7 +60,7 @@ export const updateTokenApi = (old_fingerprint, new_fingerprint) => {
 
 export const logoutApi = (fingerprint) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/revoke-token`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/revoke-token`,
     {
       method: "POST",
       headers: {
@@ -89,7 +74,7 @@ export const logoutApi = (fingerprint) => {
 
 export const verifyUserApi = (user, code) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/verify-user`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/verify-user`,
     {
       method: "POST",
       headers: {
@@ -103,7 +88,7 @@ export const verifyUserApi = (user, code) => {
 
 export const revokeUserApi = (user, code) => {
   return [
-    `${process.env.NEXT_PUBLIC_PROXY_BASE}/auth/revoke-user`,
+    `${process.env.NEXT_PUBLIC_PROXY_BASE}/v1/admin/auth/revoke-user`,
     {
       method: "POST",
       headers: {

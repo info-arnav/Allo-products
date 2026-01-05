@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!user || !user.user_id) {
-      router.replace("/login");
+      router.replace("/");
     } else {
       setChecked(true);
     }
