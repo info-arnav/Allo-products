@@ -15,66 +15,79 @@ This is an auto-generated email. For any queries, contact info@allo.co.in.
 — The Allo Team
   `,
     `
-  <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 40px 24px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07); text-align: center;">
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background: #0a0a0a;">
     
-    <div style="margin-bottom: 32px;">
-      <img src="https://www.allo.co.in/logo.png" alt="Allo Logo" style="max-width: 180px; height: auto;" />
+    <div style="background: linear-gradient(135deg, #171717 0%, #0a0a0a 100%); padding: 48px 32px; text-align: center; border-bottom: 2px solid #f6b215;">
+      <img src="https://www.allo.co.in/logo.png" alt="Allo Logo" style="width: 80px; height: 80px; margin-bottom: 24px;" />
+      <h1 style="font-size: 32px; font-weight: 700; margin: 0; color: #ededed;">
+        Allo <span style="color: #f6b215;">Admin</span>
+      </h1>
     </div>
 
-    <br> 
-    <br> 
+    <div style="background: #1a1a1a; padding: 40px 32px; border-left: 1px solid #262626; border-right: 1px solid #262626;">
+      
+      <h2 style="font-size: 24px; font-weight: 700; margin: 0 0 16px 0; color: #ededed; text-align: center;">
+        Verify Your Account
+      </h2>
 
-    <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #111;">
-      Verify your <span style="color: #0872fc;">Allo</span> account
-    </h1>
+      <p style="font-size: 16px; line-height: 1.6; margin: 0 0 32px 0; color: #a3a3a3; text-align: center;">
+        You're just one step away from accessing the Allo admin portal. Click below to verify your email address and activate your account.
+      </p>
 
-    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 24px;">
-      You're just one step away! Click below to verify your email address and activate your account.
-    </p>
+      <div style="text-align: center; margin-bottom: 32px;">
+        <a href="${frontned_uri}/verify-user?user=${user_id}&code=${code}"
+           style="display: inline-block; background: #f6b215; color: #02213e; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-size: 16px; font-weight: 600; box-shadow: 0 8px 24px rgba(246, 178, 21, 0.25); transition: all 0.3s ease;">
+          Verify My Email
+        </a>
+      </div>
 
-    <a href="${frontned_uri}/verify-user?user=${user_id}&code=${code}"
-       style="display: inline-block; background: #0872fc; color: #fff; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-size: 16px; font-weight: 600; margin-bottom: 32px;">
-      Verify My Email
-    </a>
+      <div style="background: #262626; height: 1px; margin: 32px 0;"></div>
 
-    <hr style="border: none; border-top: 1px solid #eee; margin: 32px 0;" />
+      <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px 0; color: #a3a3a3; text-align: center;">
+        Didn't request this? You can cancel the signup below:
+      </p>
 
-    <p style="font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
-      Didn’t request this? You can cancel the signup below:
-    </p>
+      <div style="text-align: center; margin-bottom: 32px;">
+        <a href="${frontned_uri}/revoke-user?user=${user_id}&code=${code}"
+           style="display: inline-block; background: #404040; color: #ededed; text-decoration: none; padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 600; border: 1px solid #525252;">
+          Revoke Signup
+        </a>
+      </div>
 
-    <a href="${frontned_uri}/revoke-user?user=${user_id}&code=${code}"
-       style="display: inline-block; background: #e11d48; color: #fff; text-decoration: none; padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 600;">
-      Revoke Signup
-    </a>
+      <div style="background: #0a0a0a; padding: 24px; border-radius: 12px; border: 1px solid #262626; margin-top: 32px;">
+        <p style="font-size: 12px; line-height: 1.6; margin: 0 0 16px 0; color: #737373; text-align: center;">
+          If the buttons don't work, copy and paste the links below into your browser:
+        </p>
 
-    <p style="font-size: 12px; line-height: 1.6; margin-top: 32px; color: #666;">
-      If the buttons don’t work, copy and paste the links below into your browser:
-    </p>
+        <p style="font-size: 11px; line-height: 1.8; margin: 0 0 12px 0; word-break: break-all; color: #a3a3a3;">
+          <strong style="color: #d4d4d4;">Verify:</strong><br />
+          <a href="${frontned_uri}/verify-user?user=${user_id}&code=${code}" style="color: #f6b215; text-decoration: none;">
+            ${frontned_uri}/verify-user?user=${user_id}&code=${code}
+          </a>
+        </p>
 
-    <p style="font-size: 12px; line-height: 1.6; word-break: break-word">
-      Verify:<br />
-      <a href="${frontned_uri}/verify-user?user=${user_id}&code=${code}" style="word-break: break-word;">
-        ${frontned_uri}/<wbr>verify-user?<wbr>user=${user_id}&amp;code=${code}
-      </a>
-    </p>
+        <p style="font-size: 11px; line-height: 1.8; margin: 0; word-break: break-all; color: #a3a3a3;">
+          <strong style="color: #d4d4d4;">Revoke:</strong><br />
+          <a href="${frontned_uri}/revoke-user?user=${user_id}&code=${code}" style="color: #737373; text-decoration: none;">
+            ${frontned_uri}/revoke-user?user=${user_id}&code=${code}
+          </a>
+        </p>
+      </div>
 
-    <p style="font-size: 12px; line-height: 1.6; word-break: break-word;">
-      Revoke:<br />
-      <a href="${frontned_uri}/revoke-user?user=${user_id}&code=${code}" style="word-break: break-word;">
-        ${frontned_uri}/<wbr>revoke-user?<wbr>user=${user_id}&amp;code=${code}
-      </a>
-    </p>
+    </div>
 
-    <p style="font-size: 13px; line-height: 1.6; margin-top: 40px; color: #555;">
-      This is an auto-generated email. For any queries, contact
-      <a href="mailto:info@allo.co.in" style="">info@allo.co.in</a>.
-    </p>
+    <div style="background: #0a0a0a; padding: 32px; text-align: center; border-top: 1px solid #262626;">
+      <p style="font-size: 13px; line-height: 1.6; margin: 0 0 8px 0; color: #737373;">
+        This is an auto-generated email. For any queries, contact
+        <a href="mailto:info@allo.co.in" style="color: #f6b215; text-decoration: none;">info@allo.co.in</a>
+      </p>
 
-    <p style="font-size: 14px; line-height: 1.6; margin-top: 16px; color: #555;">
-      Best regards,<br />
-      <strong>The Allo Team</strong>
-    </p>
+      <p style="font-size: 14px; line-height: 1.6; margin: 16px 0 0 0; color: #a3a3a3;">
+        Best regards,<br />
+        <strong style="color: #ededed;">The Allo Team</strong>
+      </p>
+    </div>
+
   </div>
   `,
   ];

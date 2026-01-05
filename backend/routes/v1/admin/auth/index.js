@@ -10,6 +10,7 @@ const verifyUser = require("./verifyUser");
 const revokeUser = require("./revokeUser");
 const sendVerification = require("./sendVerification");
 const verifyToken = require("./verifyToken");
+const { rootAuthenticate } = require("../../../../auth/authenticate");
 
 router.use("/sign-in", signIn);
 router.use("/sign-up", signUp);
@@ -18,7 +19,7 @@ router.use("/revoke-token", revokeToken);
 router.use("/revoke-token-body", revokeTokenBody);
 router.use("/verify-user", verifyUser);
 router.use("/revoke-user", revokeUser);
-router.use("/send-verification", sendVerification);
+router.use("/send-verification", rootAuthenticate, sendVerification);
 router.use("/verify-token", verifyToken);
 
 module.exports = router;
