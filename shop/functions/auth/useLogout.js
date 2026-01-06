@@ -12,8 +12,9 @@ export default function useLogout() {
   } = useSession();
 
   return async function logout() {
+    const base = process.env.EXPO_PUBLIC_API_URL;
     try {
-      await fetch(`${base}/auth/revoke-token`, {
+      await fetch(`${base}/v1/shop/auth/revoke-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

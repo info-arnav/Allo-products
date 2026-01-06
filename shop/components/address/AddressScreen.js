@@ -77,7 +77,6 @@ export default function AddressScreen() {
       const response = await Fetch(...addAddressApi(newAddress));
 
       if (response && !response.error) {
-        // Set the newly saved address as the active address
         setDeliveryAddress(newAddress);
         navigation.goBack();
       } else {

@@ -1,10 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import { useSession } from "../../context/sessionContext";
 import useLogout from "./useLogout";
 import { saveSession } from "./saveSession";
 
 export default function useFetch() {
-  const navigation = useNavigation();
   const {
     deviceId,
     setAccessToken,
