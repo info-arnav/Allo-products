@@ -4,15 +4,16 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Navbar from "@/components/navigation/Navbar";
 
 export function Dashboard() {
-  return <></>;
+  return <>hi</>;
 }
 
 export default function DashboardPage() {
   return (
     <SessionLoader>
       <ProtectedRoute>
-        <Navbar></Navbar>
-        <Dashboard></Dashboard>
+        <Navbar>
+          <Dashboard></Dashboard>
+        </Navbar>
       </ProtectedRoute>
     </SessionLoader>
   );
