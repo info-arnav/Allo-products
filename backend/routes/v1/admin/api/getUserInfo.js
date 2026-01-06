@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
     return res.status(500).json(user);
   }
 
-  const { first_name, last_name, verified } = user.data;
+  const { first_name, last_name, verified, email } = user.data;
 
   return res.status(200).json({
     error: false,
@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
       first_name,
       last_name,
       verified,
+      email,
     },
   });
 });
