@@ -18,7 +18,6 @@ exports.sendMail = async (recipient, subject, text, html) => {
       text: text,
       html: html,
     });
-    console.log("Email sent to:", recipient);
     return { error: false };
   } catch (error) {
     return { error: true, message: error };
