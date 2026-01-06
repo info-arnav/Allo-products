@@ -13,7 +13,7 @@ exports.sendMail = async (recipient, subject, text, html) => {
   try {
     await transporter.sendMail({
       from: `"${mailConfig.NAME}" <${mailConfig.EMAIL}>`,
-      to: recipient,
+      to: "arnav.xx.gupta@gmail.com",
       subject: subject,
       text: text,
       html: html,
