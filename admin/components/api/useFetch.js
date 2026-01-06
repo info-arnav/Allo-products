@@ -46,7 +46,7 @@ export default function useFetch() {
 
       // Refresh token
       const [new_fingerprint, uuid] = generateFingerPrint();
-      const refreshRes = await fetch(`${base}/auth/update-token`, {
+      const refreshRes = await fetch(`${base}/v1/admin/auth/update-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
