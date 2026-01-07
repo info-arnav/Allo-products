@@ -1,48 +1,30 @@
+const nodemailer = require("nodemailer");
 const mailConfig = require("../config/mail.config.js");
 
-const { Client } = require("@microsoft/microsoft-graph-client");
-const { ClientSecretCredential } = require("@azure/identity");
-require("isomorphic-fetch");
-
-const credential = new ClientSecretCredential(
-  mailConfig.AZURE_TENANT_ID,
-  mailConfig.AZURE_CLIENT_ID,
-  mailConfig.AZURE_CLIENT_SECRET
-);
-
-const graphClient = Client.initWithMiddleware({
-  authProvider: {
-    getAccessToken: async () => {
-      const token = await credential.getToken(
-        "https://graph.microsoft.com/.default"
-      );
-      return token.token;
-    },
+const transporter = nodemailer.createTransport({
+  host: "email-smtp.ap-south-1.amazonaws.com",
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: mailConfig.SMTP_USERNAME,
+    pass: mailConfig.SMTP_PASSWORD,
   },
+  debug: true,
+  logger: true,
 });
 
-exports.sendMail = async (to, subject, text, html) => {
+exports.sendMail = async (recipient, subject, text, html) => {
   try {
-    await graphClient.api(`/users/${mailConfig.EMAIL}/sendMail`).post({
-      message: {
-        subject,
-        body: {
-          contentType: "HTML",
-          content: html || text,
-        },
-        toRecipients: [
-          {
-            emailAddress: { address: to },
-          },
-        ],
-      },
-      saveToSentItems: "true",
+    await transporter.sendMail({
+      from: `"${mailConfig.NAME}" <${mailConfig.EMAIL}>`,
+      to: recipient,
+      subject: subject,
+      text: text,
+      html: html,
     });
     return { error: false };
   } catch (error) {
-    return {
-      error: true,
-      message: "Failed to send email",
-    };
+    return { error: true, message: "Some error occurred while sending email" };
   }
 };

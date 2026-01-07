@@ -1,6 +1,6 @@
 module.exports = {
-  AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-  AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
-  AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
   EMAIL: process.env.EMAIL,
+  NAME: process.env.NAME,
+  SMTP_USERNAME: process.env.SMTP_USERNAME,
+  SMTP_PASSWORD: process.env.SMTP_PASSWORD,
 };

@@ -86,6 +86,18 @@ async function rootAuthenticate(req, res, next) {
   next();
 }
 
+async function verified(req, res, next) {
+  if (!req.processedUser.verified) {
+    return res.status(403).json({
+      error: true,
+      code: 403,
+      message: "User email not verified",
+    });
+  }
+
+  next();
+}
+
 async function shopAuthenticate(req, res, next) {
   if (!req.processedUser || !req.processedUser.userType) {
     return res.status(401).json({
@@ -106,4 +118,4 @@ async function shopAuthenticate(req, res, next) {
   next();
 }
 
-module.exports = { authenticate, rootAuthenticate, shopAuthenticate };
+module.exports = { authenticate, rootAuthenticate, shopAuthenticate, verified };
