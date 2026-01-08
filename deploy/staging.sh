@@ -1,4 +1,12 @@
 #!/bin/bash
+LOCKFILE=/tmp/allo-deploy.lock
+
+exec 9>$LOCKFILE || exit 1
+flock -n 9 || {
+  echo "Another deploy already running, exiting."
+  exit 0
+}
+
 exec >> /var/log/allo-deploy.log 2>&1
 set -x
 date
