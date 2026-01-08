@@ -1,30 +1,73 @@
-const nodemailer = require("nodemailer");
+const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
 const mailConfig = require("../config/mail.config.js");
 
-const transporter = nodemailer.createTransport({
-  host: "email-smtp.ap-south-1.amazonaws.com",
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: mailConfig.SMTP_USERNAME,
-    pass: mailConfig.SMTP_PASSWORD,
+const sesClient = new SESClient({
+  region: mailConfig.AWS_REGION,
+  credentials: {
+    accessKeyId: mailConfig.AWS_ACCESS_KEY_ID,
+    secretAccessKey: mailConfig.AWS_SECRET_ACCESS_KEY,
   },
-  debug: true,
-  logger: true,
 });
 
 exports.sendMail = async (recipient, subject, text, html) => {
+  if (!recipient || !subject || (!text && !html)) {
+    console.error("Invalid email parameters:", { recipient, subject });
+    return {
+      error: true,
+      message: "Invalid email parameters",
+    };
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(recipient)) {
+    console.error("Invalid email address:", recipient);
+    return {
+      error: true,
+      message: "Invalid email address",
+    };
+  }
+
+  const params = {
+    Source: `"${mailConfig.NAME}" <${mailConfig.EMAIL}>`,
+    Destination: {
+      ToAddresses: [recipient],
+    },
+    Message: {
+      Subject: {
+        Data: subject,
+        Charset: "UTF-8",
+      },
+      Body: {
+        ...(html && {
+          Html: {
+            Data: html,
+            Charset: "UTF-8",
+          },
+        }),
+        ...(text && {
+          Text: {
+            Data: text,
+            Charset: "UTF-8",
+          },
+        }),
+      },
+    },
+  };
+
   try {
-    await transporter.sendMail({
-      from: `"${mailConfig.NAME}" <${mailConfig.EMAIL}>`,
-      to: recipient,
-      subject: subject,
-      text: text,
-      html: html,
-    });
-    return { error: false };
+    const command = new SendEmailCommand(params);
+    const response = await sesClient.send(command);
+
+    return {
+      error: false,
+      messageId: response.MessageId,
+    };
   } catch (error) {
-    return { error: true, message: "Some error occurred while sending email" };
+    return {
+      error: true,
+      message: "Failed to send email",
+      details: error.message,
+      code: error.code,
+    };
   }
 };
