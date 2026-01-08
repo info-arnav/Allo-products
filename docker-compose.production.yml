@@ -20,6 +20,10 @@ services:
     build:
       context: ./websites/main
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_PROXY_BASE: ${NEXT_PUBLIC_PROXY_BASE_PRODUCTION}
+        NEXT_PUBLIC_GOOGLE_ANALYTICS: ${NEXT_PUBLIC_GOOGLE_ANALYTICS_PRODUCTION}
+        NEXT_PUBLIC_GOOGLE_TAG_MANAGER: ${NEXT_PUBLIC_GOOGLE_TAG_MANAGER_PRODUCTION}
     container_name: allo-website-deploy-production
     ports:
       - "3000:3000"
@@ -35,6 +39,10 @@ services:
     build:
       context: ./websites/admin
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_PROXY_BASE: ${NEXT_PUBLIC_PROXY_BASE_PRODUCTION}
+        NEXT_PUBLIC_GOOGLE_ANALYTICS: ${NEXT_PUBLIC_GOOGLE_ANALYTICS_PRODUCTION}
+        NEXT_PUBLIC_GOOGLE_TAG_MANAGER: ${NEXT_PUBLIC_GOOGLE_TAG_MANAGER_PRODUCTION}
     container_name: allo-admin-deploy-production
     ports:
       - "3001:3000"
