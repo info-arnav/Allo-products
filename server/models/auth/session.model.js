@@ -35,6 +35,10 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
         defaultValue: () => new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
       },
+      scope: {
+        type: Sequelize.ENUM("user", "admin", "shop"),
+        defaultValue: "user",
+      },
     },
     { timestamps: true }
   );

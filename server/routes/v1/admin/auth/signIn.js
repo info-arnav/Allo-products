@@ -55,7 +55,8 @@ router.post("/", async (req, res) => {
   const sessionData = await sessions.createWithEmail(
     email,
     fingerprint,
-    data.data.user_id
+    data.data.user_id,
+    "admin"
   );
 
   if (!sessionData.error) {

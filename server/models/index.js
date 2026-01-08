@@ -36,6 +36,6 @@ db.verifications = require("./auth/verification.model.js")(
   Sequelize
 );
 
-require("./associations")(db);
+require("./associations.js")(db);
 
 module.exports = db;

@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: allo-backend-staging
+    ports:
+      - "1234:1234"
+    env_file:
+      - /etc/allo/server/.env.staging
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+    networks:
+      - allo-network
+
+  website:
+    build:
+      context: ./websites/main
+      dockerfile: Dockerfile
+    container_name: allo-website-staging
+    ports:
+      - "3000:3000"
+    env_file:
+      - /etc/allo/websites/main/.env.staging
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+    networks:
+      - allo-network
+
+  admin:
+    build:
+      context: ./websites/admin
+      dockerfile: Dockerfile
+    container_name: allo-admin-staging
+    ports:
+      - "3001:3000"
+    env_file:
+      - /etc/allo/websites/admin/.env.staging
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+    networks:
+      - allo-network
+
+networks:
+  allo-network:
+    driver: bridge

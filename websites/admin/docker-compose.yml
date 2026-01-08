@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: allo-admin
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - allo-network
+
+networks:
+  allo-network:
+    driver: bridge

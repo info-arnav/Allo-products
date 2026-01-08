@@ -1,4 +1,4 @@
-const twillioConifg = require("../config/twillio.config.js");
+const twillioConifg = require("./twillio.config.js");
 const twilio = require("twilio");
 
 const tw = twilio(

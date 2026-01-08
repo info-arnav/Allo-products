@@ -20,7 +20,8 @@ router.post("/", async (req, res) => {
 
   let data = await sessions.validateAccessTokenWithFingerprint(
     access_token,
-    fingerprint
+    fingerprint,
+    "admin"
   );
 
   if (data.error) {

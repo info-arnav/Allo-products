@@ -1,10 +1,16 @@
 const db = require("../models");
 const generator = require("./components/generator");
 const jwt = require("jsonwebtoken");
+const getSecret = require("./components/getSecret");
 const Session = db.sessions;
 const { col, where, Op } = db.Sequelize;
 
-exports.createWithNumber = async (number, device_id, user_id) => {
+exports.createWithNumber = async (
+  number,
+  device_id,
+  user_id,
+  scope = "user"
+) => {
   if (!number || !device_id || !user_id) {
     return { error: true, message: "Credentials are required" };
   }
@@ -13,6 +19,7 @@ exports.createWithNumber = async (number, device_id, user_id) => {
     number: number,
     device_id: device_id,
     user_id: user_id,
+    scope: scope,
   };
 
   const data = await generator(Session, session);
@@ -20,8 +27,8 @@ exports.createWithNumber = async (number, device_id, user_id) => {
   delete raw.device_id;
 
   raw.access_token = jwt.sign(
-    { user_id: user_id, device_id: device_id },
-    process.env.ACCESS_SECRET,
+    { user_id: user_id, device_id: device_id, scope: scope },
+    getSecret(scope),
     { expiresIn: "15m" }
   );
 
@@ -30,7 +37,12 @@ exports.createWithNumber = async (number, device_id, user_id) => {
   return data;
 };
 
-exports.createWithEmail = async (email, fingerprint, user_id) => {
+exports.createWithEmail = async (
+  email,
+  fingerprint,
+  user_id,
+  scope = "user"
+) => {
   if (!email || !fingerprint || !user_id) {
     return { error: true, message: "Credentials are required" };
   }
@@ -39,6 +51,7 @@ exports.createWithEmail = async (email, fingerprint, user_id) => {
     email: email,
     fingerprint: fingerprint,
     user_id: user_id,
+    scope: scope,
   };
 
   const data = await generator(Session, session);
@@ -54,8 +67,8 @@ exports.createWithEmail = async (email, fingerprint, user_id) => {
   delete raw.fingerprint;
 
   raw.access_token = jwt.sign(
-    { user_id: user_id, fingerprint: fingerprint },
-    process.env.ACCESS_SECRET,
+    { user_id: user_id, fingerprint: fingerprint, scope: scope },
+    getSecret(scope),
     { expiresIn: "15m" }
   );
 
@@ -112,14 +125,15 @@ exports.deleteWithFingerPrint = async (refresh_token, fingerprint) => {
 
 exports.validateAccessTokenWithFingerprint = async (
   access_token,
-  fingerprint
+  fingerprint,
+  scope = "user"
 ) => {
   if (!access_token || !fingerprint) {
     return { error: true, message: "Token or fingerprint missing" };
   }
 
   try {
-    const decoded = jwt.verify(access_token, process.env.ACCESS_SECRET);
+    const decoded = jwt.verify(access_token, getSecret(scope));
 
     if (decoded.fingerprint !== fingerprint) {
       return {
@@ -127,6 +141,15 @@ exports.validateAccessTokenWithFingerprint = async (
         exists: true,
         expired: true,
         message: "Fingerprint mismatch",
+      };
+    }
+
+    if (decoded.scope !== scope) {
+      return {
+        error: false,
+        exists: true,
+        expired: true,
+        message: "Scope mismatch",
       };
     }
 
@@ -149,13 +172,17 @@ exports.validateAccessTokenWithFingerprint = async (
   }
 };
 
-exports.validateAccessTokenWithDeviceId = async (access_token, device_id) => {
+exports.validateAccessTokenWithDeviceId = async (
+  access_token,
+  device_id,
+  scope = "user"
+) => {
   if (!access_token || !device_id) {
     return { error: true, message: "Token or device ID missing" };
   }
 
   try {
-    const decoded = jwt.verify(access_token, process.env.ACCESS_SECRET);
+    const decoded = jwt.verify(access_token, getSecret(scope));
 
     if (decoded.device_id !== device_id) {
       return {
@@ -163,6 +190,15 @@ exports.validateAccessTokenWithDeviceId = async (access_token, device_id) => {
         exists: true,
         expired: true,
         message: "Device ID mismatch",
+      };
+    }
+
+    if (decoded.scope !== scope) {
+      return {
+        error: false,
+        exists: true,
+        expired: true,
+        message: "Scope mismatch",
       };
     }
 
@@ -208,7 +244,12 @@ exports.updateAccessTokenWithDeviceId = async (refresh_token, device_id) => {
         return { error: true, exists: true, expired: true };
       }
 
-      return this.createWithNumber(data.number, device_id, data.user_id);
+      return this.createWithNumber(
+        data.number,
+        device_id,
+        data.user_id,
+        data.scope
+      );
     })
     .catch((err) => {
       return {
@@ -245,7 +286,12 @@ exports.updateAccessTokenWithFingerPrint = async (
         return { error: true, exists: true, expired: true };
       }
 
-      return this.createWithEmail(data.email, fingerprint, data.user_id);
+      return this.createWithEmail(
+        data.email,
+        fingerprint,
+        data.user_id,
+        data.scope
+      );
     })
     .catch((err) => {
       return {

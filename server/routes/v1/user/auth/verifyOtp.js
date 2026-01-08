@@ -44,7 +44,8 @@ router.post("/", async (req, res) => {
   const sessionData = await sessions.createWithNumber(
     number,
     deviceId,
-    userResponse.data.user_id
+    userResponse.data.user_id,
+    "user"
   );
 
   return res.status(sessionData.error ? 500 : 200).json(sessionData);

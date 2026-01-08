@@ -15,7 +15,8 @@ async function authenticate(req, res, next) {
 
   let data = await sessions.validateAccessTokenWithDeviceId(
     access_token,
-    deviceId
+    deviceId,
+    "user"
   );
 
   if (data.error || data.expired) {
@@ -46,7 +47,8 @@ async function rootAuthenticate(req, res, next) {
 
   let data = await sessions.validateAccessTokenWithFingerprint(
     access_token,
-    fingerprint
+    fingerprint,
+    "admin"
   );
 
   if (data.error || data.expired) {
@@ -99,19 +101,36 @@ async function verified(req, res, next) {
 }
 
 async function shopAuthenticate(req, res, next) {
-  if (!req.processedUser || !req.processedUser.userType) {
+  if (!req.headers.authorization.split(" ")[1] || !req.headers["x-device-id"]) {
     return res.status(401).json({
       error: true,
       code: 401,
-      message: "User authentication required",
+      message: "Required credentials not provided",
     });
   }
 
-  if (req.processedUser.userType !== "shop") {
-    return res.status(403).json({
+  let deviceId = req.headers["x-device-id"];
+  let access_token = req.headers.authorization.split(" ")[1];
+
+  let data = await sessions.validateAccessTokenWithDeviceId(
+    access_token,
+    deviceId,
+    "shop"
+  );
+
+  if (data.error || data.expired) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Access Denied", data: data });
+  }
+
+  req.processedUser = data;
+
+  if (!req.processedUser.userType || req.processedUser.userType !== "shop") {
+    return res.status(401).json({
       error: true,
-      code: 403,
-      message: "Access denied. Shop account required.",
+      code: 401,
+      message: "Shop authentication required",
     });
   }
 
