@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,6 +78,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#F6B215" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER} />
         {children}
         <digiiq-chatbot agent-id="9ecd59b2-4c7c-4e7f-a7ee-7501fb493729"></digiiq-chatbot>
         <script
