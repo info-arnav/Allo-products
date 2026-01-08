@@ -16,5 +16,4 @@ ENV=staging npm run sync
 rm .env
 cd ..
 
-docker compose -f docker-compose.staging.yml down
-docker compose -f docker-compose.staging.yml up -d --build
+docker compose -f docker-compose.staging.yml up -d --build --no-deps backend website admin
