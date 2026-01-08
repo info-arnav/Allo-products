@@ -42,6 +42,12 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Environment files - never commit
+.env
+.env.development
+.env.staging
+.env.production
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
