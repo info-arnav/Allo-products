@@ -22,6 +22,9 @@ RUN addgroup -S app && adduser -S -G app app
 COPY --from=deps --chown=app:app /app/node_modules ./node_modules
 COPY --chown=app:app . .
 
+# Create uploads folder with correct ownership
+RUN mkdir -p /app/uploads && chown -R app:app /app
+
 USER app
 
 EXPOSE 4000
