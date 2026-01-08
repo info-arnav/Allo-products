@@ -5,7 +5,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: allo-backend-production
+    container_name: allo-backend-deploy-production
     ports:
       - "4000:4000"
     env_file:
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
       args:
         ENV_FILE: /etc/allo/websites/main/.env.production
-    container_name: allo-website-production
+    container_name: allo-website-deploy-production
     ports:
       - "3000:3000"
     env_file:
@@ -39,7 +39,7 @@ services:
       dockerfile: Dockerfile
       args:
         ENV_FILE: /etc/allo/websites/admin/.env.production
-    container_name: allo-admin-production
+    container_name: allo-admin-deploy-production
     ports:
       - "3001:3000"
     env_file:
