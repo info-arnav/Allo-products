@@ -61,6 +61,7 @@ exports.sendMail = async (recipient, subject, text, html) => {
       messageId: response.MessageId,
     };
   } catch (error) {
+    console.error("[error] [ses]", error);
     return {
       error: true,
       message: "Failed to send email",
