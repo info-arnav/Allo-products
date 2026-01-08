@@ -1,4 +1,5 @@
 #!/bin/bash
+exec >> /var/log/allo-deploy.log 2>&1
 docker system prune -af
 set -e
 
@@ -9,7 +10,9 @@ git pull origin deploy
 
 echo "Syncing database..."
 cd server
+cp /etc/allo/server/.env.staging .env
 ENV=staging npm run sync
+rm .env
 cd ..
 
 docker compose -f docker-compose.staging.yml down
