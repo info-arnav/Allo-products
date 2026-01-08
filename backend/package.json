@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "initialize": "node scripts/initializeDB.js",
+    "backup": "node scripts/backupDB.js",
     "initialize:vdb": "node scripts/initializeVDB.js",
     "sync": "node scripts/syncDb.js",
     "dev": "nodemon index.js",
