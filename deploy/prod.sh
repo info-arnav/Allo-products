@@ -1,7 +1,8 @@
 #!/bin/bash
 exec >> /var/log/allo-deploy.log 2>&1
+set -x
+date
 docker system prune -af
-set -e
 
 cd /var/www/Allo-products
 
