@@ -1,3 +1,3 @@
 # Allo App
 
-A modern shopping application.
+A modern shopping application
