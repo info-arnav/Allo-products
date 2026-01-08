@@ -1,10 +1,20 @@
 const dbConfig = require("../config/db.config.js");
 const Sequelize = require("sequelize");
 
+const isProd = process.env.PROD == "true";
+
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   logging: false,
+  dialectOptions: isProd
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
