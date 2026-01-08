@@ -16,4 +16,6 @@ ENV=production npm run sync
 rm .env
 cd ..
 
-docker compose -f docker-compose.production.yml up -d --build --no-deps backend website admin
+docker compose -f docker-compose.production.yml up -d --build --no-deps backend
+docker compose -f docker-compose.production.yml up -d --build --no-deps website
+docker compose -f docker-compose.production.yml up -d --build --no-deps admin
