@@ -11,7 +11,6 @@ const sesClient = new SESClient({
 
 exports.sendMail = async (recipient, subject, text, html) => {
   if (!recipient || !subject || (!text && !html)) {
-    console.error("Invalid email parameters:", { recipient, subject });
     return {
       error: true,
       message: "Invalid email parameters",
@@ -20,7 +19,6 @@ exports.sendMail = async (recipient, subject, text, html) => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(recipient)) {
-    console.error("Invalid email address:", recipient);
     return {
       error: true,
       message: "Invalid email address",
