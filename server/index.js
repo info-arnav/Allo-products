@@ -26,6 +26,7 @@ const allowedOrigins = [
   "https://allo.co.in",
   "https://www.allo.co.in",
   "https://admin.allo.co.in",
+  "https://staging.allo.co.in",
   process.env.FRONTEND_URI,
 ];
 

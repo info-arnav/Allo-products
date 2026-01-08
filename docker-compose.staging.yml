@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: allo-backend-staging
     ports:
-      - "1234:1234"
+      - "5000:4000"
     env_file:
       - /etc/allo/server/.env.staging
     restart: unless-stopped
@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     container_name: allo-website-staging
     ports:
-      - "3000:3000"
+      - "5001:3000"
     env_file:
       - /etc/allo/websites/main/.env.staging
     restart: unless-stopped
@@ -37,7 +37,7 @@ services:
       dockerfile: Dockerfile
     container_name: allo-admin-staging
     ports:
-      - "3001:3000"
+      - "5002:3000"
     env_file:
       - /etc/allo/websites/admin/.env.staging
     restart: unless-stopped
