@@ -24,6 +24,14 @@ ENV=production npm run sync
 rm .env
 cd ..
 
+# Copy env files into build contexts
+cp /etc/allo/websites/main/.env.production websites/main/.env.production
+cp /etc/allo/websites/admin/.env.production websites/admin/.env.production
+
 docker compose -f docker-compose.production.yml up -d --build --no-deps backend
 docker compose -f docker-compose.production.yml up -d --build --no-deps website
 docker compose -f docker-compose.production.yml up -d --build --no-deps admin
+
+# Clean up env files from build contexts
+rm websites/main/.env.production
+rm websites/admin/.env.production

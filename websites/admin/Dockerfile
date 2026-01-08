@@ -16,10 +16,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Copy env file for build
-ARG ENV_FILE
-COPY ${ENV_FILE} .env.production
-
 # Build the Next.js app
 RUN npm run build
 
