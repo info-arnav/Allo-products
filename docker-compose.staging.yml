@@ -20,6 +20,8 @@ services:
     build:
       context: ./websites/main
       dockerfile: Dockerfile
+      args:
+        ENV_FILE: /etc/allo/websites/main/.env.staging
     container_name: allo-website-staging
     ports:
       - "5001:3000"
@@ -35,6 +37,8 @@ services:
     build:
       context: ./websites/admin
       dockerfile: Dockerfile
+      args:
+        ENV_FILE: /etc/allo/websites/admin/.env.staging
     container_name: allo-admin-staging
     ports:
       - "5002:3000"

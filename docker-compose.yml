@@ -18,6 +18,8 @@ services:
     build:
       context: ./websites/main
       dockerfile: Dockerfile
+      args:
+        ENV_FILE: /etc/allo/websites/main/.env.development
     container_name: allo-website
     ports:
       - "3000:3000"
@@ -31,6 +33,8 @@ services:
     build:
       context: ./websites/admin
       dockerfile: Dockerfile
+      args:
+        ENV_FILE: /etc/allo/websites/admin/.env.development
     container_name: allo-admin
     ports:
       - "3001:3000"
