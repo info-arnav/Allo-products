@@ -3,5 +3,5 @@ export const sendUserVerificationApi = () => {
 };
 
 export const getUserInfoApi = () => {
-  return ["/v1/admin/api/get-user-info"];
+  return ["/v1/admin/api/user/get-user-info"];
 };

@@ -1,7 +1,7 @@
 export const getUserInfoApi = () => {
-  return ["/v1/user/api/get-user-info"];
+  return ["/v1/user/api/user/get-user-info"];
 };
 
 export const addAddressApi = (address) => {
-  return ["/v1/user/api/save-address", { address }];
+  return ["/v1/user/api/user/save-address", { address }];
 };

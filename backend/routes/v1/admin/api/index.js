@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const getUserInfo = require("./getUserInfo");
+const user = require("./user");
 const { rootAuthenticate } = require("../../../../auth/authenticate");
 
-router.use("/get-user-info", rootAuthenticate, getUserInfo);
+router.use("/user", rootAuthenticate, user);
 
 module.exports = router;
