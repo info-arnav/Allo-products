@@ -7,31 +7,8 @@ import Footer from "./components/Footer";
 import { AddEvent } from "@/components/analytics/google";
 
 export default function Home() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Allo",
-    description:
-      "Hyperlocal commerce platform connecting customers to neighborhood stores for instant delivery",
-    url: "https://www.allo.co.in",
-    logo: "https://www.allo.co.in/logo.png",
-    image: "https://www.allo.co.in/logo.png",
-    priceRange: "₹₹",
-    areaServed: [
-      {
-        "@type": "Place",
-        name: "Vasant Vihar, Delhi",
-      },
-    ],
-    serviceType: "Hyperlocal Delivery Service",
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <div className={styles.page}>
         <Navigation />
 
