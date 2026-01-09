@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# Prevent all search engines from indexing this admin portal
-# This is an internal employee-only application
+Sitemap: https://admin.allo.co.in/sitemap.xml
