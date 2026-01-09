@@ -1,9 +1,9 @@
 export default function manifest() {
   return {
-    name: "Allo - Your Neighborhood, Delivered",
+    name: "Allo - Hyperlocal E-Commerce Platform",
     short_name: "Allo",
     description:
-      "Get everything you need from local kirana stores delivered to your door in minutes",
+      "Order from local stores in Greater Kailash & Vasant Vihar. Fast delivery of groceries, essentials, and more.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
@@ -23,13 +23,13 @@ export default function manifest() {
         purpose: "any maskable",
       },
     ],
-    categories: ["shopping", "food", "lifestyle"],
+    categories: ["shopping", "food", "lifestyle", "business"],
     shortcuts: [
       {
         name: "Order Now",
         short_name: "Order",
         description: "Order on WhatsApp",
-        url: "https://wa.me/919999999999",
+        url: "https://wa.me/918800716273",
         icons: [{ src: "/logo-circle-128x128.png", sizes: "128x128" }],
       },
     ],

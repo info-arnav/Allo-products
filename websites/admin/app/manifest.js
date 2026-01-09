@@ -1,8 +1,9 @@
 export default function manifest() {
   return {
-    name: "Allo Admin - Admin Portal",
+    name: "Allo Admin - Operations Dashboard",
     short_name: "Allo Admin",
-    description: "Internal administration portal for Allo employees",
+    description:
+      "Admin portal for managing Allo's hyperlocal e-commerce operations",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0a0a",

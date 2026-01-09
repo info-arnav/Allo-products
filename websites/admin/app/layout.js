@@ -15,28 +15,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Allo Admin - Admin Portal | Operations Management",
+  title: "Allo Admin - Operations Dashboard | E-Commerce Management",
   description:
-    "Secure admin portal for managing Allo's hyperlocal commerce platform. Access analytics, user management, order operations, and system configuration.",
+    "Admin portal for managing Allo's hyperlocal e-commerce platform. Access real-time analytics, user management, order operations, inventory tracking, and system configuration for Greater Kailash & Vasant Vihar operations.",
   referrer: "origin-when-cross-origin",
   keywords: [
     "Allo Admin",
-    "Admin Portal",
-    "Operations Management",
-    "Dashboard",
-    "Analytics",
-    "User Management",
-    "Order Management",
-    "System Administration",
+    "Operations Dashboard",
+    "E-commerce Admin Panel",
+    "Hyperlocal Management",
+    "Order Management System",
+    "Inventory Management",
+    "Analytics Dashboard",
     "Business Intelligence",
+    "Delivery Operations",
+    "Merchant Management",
   ],
   authors: [{ name: "Allo" }],
   creator: "Allo",
   publisher: "Allo",
   formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
+    email: true,
+    address: true,
+    telephone: true,
   },
   metadataBase: new URL("https://admin.allo.co.in"),
   manifest: "/manifest.webmanifest",
@@ -48,18 +49,17 @@ export const metadata = {
     apple: "/logo-circle-128x128.png",
   },
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
   },
   openGraph: {
-    title: "Allo Admin Portal",
+    title: "Allo Admin - Operations Dashboard",
     description:
-      "Secure admin portal for managing Allo's hyperlocal commerce platform.",
+      "Admin portal for managing Allo's hyperlocal e-commerce platform with real-time analytics and operations management.",
     url: "/",
     siteName: "Allo Admin",
     locale: "en_IN",
@@ -75,9 +75,11 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Allo Admin Portal",
+    site: "@allo2026",
+    creator: "@allo2026",
+    title: "Allo Admin - Operations Dashboard",
     description:
-      "Secure admin portal for managing Allo's hyperlocal commerce platform.",
+      "Admin portal for managing Allo's hyperlocal e-commerce operations.",
     images: [
       {
         url: "https://admin.allo.co.in/logo-circle.png",
@@ -89,31 +91,38 @@ export const metadata = {
 
 const json = {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "SoftwareApplication",
   name: "Allo Admin Portal",
   url: "https://admin.allo.co.in",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web Browser",
   description:
-    "Administrative portal for managing Allo's hyperlocal commerce platform.",
+    "Administrative dashboard for managing Allo's hyperlocal e-commerce platform operations.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "INR",
+  },
   author: {
     "@type": "Organization",
     name: "Allo",
     url: "https://www.allo.co.in",
-    logo: "https://admin.allo.co.in/logo-circle.svg",
+    logo: "https://admin.allo.co.in/logo-circle.png",
     email: "info@allo.co.in",
+    telephone: "+91-8800716273",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Vasant Vihar",
-      addressLocality: "Delhi",
-      addressCountry: "IN",
+      streetAddress: "Greater Kailash 2",
+      addressLocality: "New Delhi",
       addressRegion: "Delhi",
-      postalCode: "110057",
+      postalCode: "110048",
+      addressCountry: "IN",
     },
-  },
-  offers: {
-    "@type": "Offer",
-    category: "Enterprise Software",
+    sameAs: [
+      "https://www.instagram.com/allo.co.in/",
+      "https://www.linkedin.com/company/111218968/",
+      "https://x.com/allo2026/",
+    ],
   },
 };
 
