@@ -39,9 +39,13 @@ export const metadata = {
     telephone: false,
   },
   metadataBase: new URL("https://admin.allo.co.in"),
+  manifest: "/manifest.webmanifest",
   icons: {
-    icon: "/logo-circle.svg",
-    apple: "/logo-circle.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/logo-circle.svg", type: "image/svg+xml" },
+    ],
+    apple: "/logo-circle-128x128.png",
   },
   robots: {
     index: false,
