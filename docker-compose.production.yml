@@ -27,8 +27,6 @@ services:
     container_name: allo-website-deploy-production
     ports:
       - "3000:3000"
-    env_file:
-      - /etc/allo/websites/main/.env.production
     restart: always
     environment:
       - NODE_ENV=production
@@ -43,11 +41,11 @@ services:
         NEXT_PUBLIC_PROXY_BASE: ${NEXT_PUBLIC_PROXY_BASE}
         NEXT_PUBLIC_GOOGLE_ANALYTICS: ${NEXT_PUBLIC_GOOGLE_ANALYTICS}
         NEXT_PUBLIC_GOOGLE_TAG_MANAGER: ${NEXT_PUBLIC_GOOGLE_TAG_MANAGER}
+        DATABASE_URI: ${DATABASE_URI}
+        SERVICE_KEY: ${SERVICE_KEY}
     container_name: allo-admin-deploy-production
     ports:
       - "3001:3000"
-    env_file:
-      - /etc/allo/websites/admin/.env.production
     restart: always
     environment:
       - NODE_ENV=production

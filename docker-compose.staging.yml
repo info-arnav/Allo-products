@@ -27,8 +27,6 @@ services:
     container_name: allo-website-deploy-staging
     ports:
       - "5001:3000"
-    env_file:
-      - /etc/allo/websites/main/.env.staging
     restart: unless-stopped
     environment:
       - NODE_ENV=staging
@@ -43,11 +41,11 @@ services:
         NEXT_PUBLIC_PROXY_BASE: ${NEXT_PUBLIC_PROXY_BASE}
         NEXT_PUBLIC_GOOGLE_ANALYTICS: ${NEXT_PUBLIC_GOOGLE_ANALYTICS}
         NEXT_PUBLIC_GOOGLE_TAG_MANAGER: ${NEXT_PUBLIC_GOOGLE_TAG_MANAGER}
+        DATABASE_URI: ${DATABASE_URI}
+        SERVICE_KEY: ${SERVICE_KEY}
     container_name: allo-admin-deploy-staging
     ports:
       - "5002:3000"
-    env_file:
-      - /etc/allo/websites/admin/.env.staging
     restart: unless-stopped
     environment:
       - NODE_ENV=staging
