@@ -3,7 +3,7 @@ set -e
 
 LOCKFILE=/tmp/allo-deploy.lock
 exec 9>$LOCKFILE || exit 1
-flock -n 9 || exit 0
+flock 9
 
 exec >> /var/log/allo-deploy.log 2>&1
 set -x
@@ -24,9 +24,6 @@ cd ..
 set -a
 source /etc/allo/websites/main/.env.production
 set +a
-
-# Initialize compose stack if needed (creates networks, etc)
-docker compose -f docker-compose.production.yml up -d --no-build 2>/dev/null || true
 
 # Build and deploy one service at a time to avoid RAM issues
 docker compose -f docker-compose.production.yml up -d --build --no-deps backend
