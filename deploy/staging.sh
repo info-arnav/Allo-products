@@ -25,7 +25,13 @@ set -a
 source /etc/allo/websites/main/.env.staging
 set +a
 
-docker compose -f docker-compose.staging.yml down
-docker system prune -af --volumes
-docker compose -f docker-compose.staging.yml build --no-cache
-docker compose -f docker-compose.staging.yml up -d
+# Initialize compose stack if needed (creates networks, etc)
+docker compose -f docker-compose.staging.yml up -d --no-build 2>/dev/null || true
+
+# Build and deploy one service at a time to avoid RAM issues
+docker compose -f docker-compose.staging.yml up -d --build --no-deps backend
+docker compose -f docker-compose.staging.yml up -d --build --no-deps website
+docker compose -f docker-compose.staging.yml up -d --build --no-deps admin
+
+# Clean up old images
+docker image prune -af
