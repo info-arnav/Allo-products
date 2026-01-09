@@ -46,6 +46,8 @@ services:
     container_name: allo-admin-deploy-production
     ports:
       - "3001:3000"
+    env_file:
+      - /etc/allo/websites/admin/.env.production
     restart: always
     environment:
       - NODE_ENV=production

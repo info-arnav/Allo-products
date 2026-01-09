@@ -21,19 +21,19 @@ rm .env
 cd ..
 
 # Build and deploy one service at a time to avoid RAM issues
-docker compose -f docker-compose.staging.yml up -d --build --no-deps backend
+docker compose -p allo-staging -f docker-compose.staging.yml up -d --build --no-deps backend
 
 # Load website env vars and build
 set -a
 source /etc/allo/websites/main/.env.staging
 set +a
-docker compose -f docker-compose.staging.yml up -d --build --no-deps website
+docker compose -p allo-staging -f docker-compose.staging.yml up -d --build --no-deps website
 
 # Load admin env vars and build
 set -a
 source /etc/allo/websites/admin/.env.staging
 set +a
-docker compose -f docker-compose.staging.yml up -d --build --no-deps admin
+docker compose -p allo-staging -f docker-compose.staging.yml up -d --build --no-deps admin
 
 # Clean up old images
 docker image prune -af

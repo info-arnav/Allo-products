@@ -46,6 +46,8 @@ services:
     container_name: allo-admin-deploy-staging
     ports:
       - "5002:3000"
+    env_file:
+      - /etc/allo/websites/admin/.env.staging
     restart: unless-stopped
     environment:
       - NODE_ENV=staging
