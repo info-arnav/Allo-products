@@ -5,7 +5,7 @@ const express = require("express");
 const { RateLimiterRedis } = require("rate-limiter-flexible");
 const cors = require("cors");
 const helmet = require("helmet");
-const v1Routes = require("./routes/v1");
+const routes = require("./routes");
 
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
@@ -77,7 +77,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/v1", v1Routes);
+app.use("/", routes);
 
 // Error handlers
 app.use(function fourOhFourHandler(req, res) {
