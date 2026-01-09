@@ -16,14 +16,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+RUN addgroup -S app && adduser -S -G app app
 
-# Create uploads folder with correct ownership before switching user
-RUN addgroup -S app && adduser -S -G app app && \
-    mkdir -p /app/uploads && \
-    chown -R app:app /app
+# Copy dependencies from deps stage
+COPY --from=deps --chown=app:app /app/node_modules ./node_modules
+COPY --chown=app:app . .
+
+# Create uploads folder with correct ownership
+RUN mkdir -p /app/uploads && chown -R app:app /app
 
 USER app
 
