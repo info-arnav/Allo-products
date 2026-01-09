@@ -16,6 +16,7 @@ git pull origin deploy
 # DB sync
 cd server
 cp /etc/allo/server/.env.staging .env
+npm i
 ENV=staging npm run sync
 rm .env
 cd ..

@@ -16,6 +16,7 @@ git pull origin main
 # DB sync
 cd server
 cp /etc/allo/server/.env.production .env
+npm i
 ENV=production npm run sync
 rm .env
 cd ..
