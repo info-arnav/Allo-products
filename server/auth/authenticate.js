@@ -1,5 +1,5 @@
-const sessions = require("../controllers/session.controller.js");
-const users = require("../controllers/user.controller.js");
+const sessions = require("@/controllers/session.controller.js");
+const users = require("@/controllers/user.controller.js");
 
 async function authenticate(req, res, next) {
   if (!req.headers.authorization.split(" ")[1] || !req.headers["x-device-id"]) {

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const users = require("../../../../../controllers/user.controller.js");
+const users = require("@/controllers/user.controller.js");
 
 router.post("/", async (req, res) => {
   const { address } = req.body;

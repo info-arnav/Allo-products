@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const sessions = require("../../../../controllers/session.controller.js");
+const sessions = require("@/controllers/session.controller.js");
 
 router.post("/", async (req, res) => {
   if (!req.body.refresh_token || !req.headers["x-device-id"]) {

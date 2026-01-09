@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const otps = require("../../../../controllers/otp.controller.js");
-const sendMessage = require("../../../../message/sendMessage.js");
+const otps = require("@/controllers/otp.controller.js");
+const sendMessage = require("@/message/sendMessage.js");
 
 router.post("/", async (req, res) => {
   if (!req.body.number) {

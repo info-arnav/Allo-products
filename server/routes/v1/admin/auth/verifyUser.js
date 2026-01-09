@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const verifications = require("../../../../controllers/verification.controller.js");
-const users = require("../../../../controllers/user.controller.js");
-const mailer = require("../../../../mail/transporter.js");
+const verifications = require("@/controllers/verification.controller.js");
+const users = require("@/controllers/user.controller.js");
+const mailer = require("@/mail/transporter.js");
 
-const verificationTemplate = require("../../../../templates/verification.js");
+const verificationTemplate = require("@/templates/verification.js");
 
 router.post("/", async (req, res) => {
   if (!req.body.code || !req.body.user) {

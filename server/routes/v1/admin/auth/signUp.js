@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 
-const users = require("../../../../controllers/user.controller.js");
-const verifications = require("../../../../controllers/verification.controller.js");
-const mailer = require("../../../../mail/transporter.js");
-const sessions = require("../../../../controllers/session.controller.js");
+const users = require("@/controllers/user.controller.js");
+const verifications = require("@/controllers/verification.controller.js");
+const mailer = require("@/mail/transporter.js");
+const sessions = require("@/controllers/session.controller.js");
 
-const verificationTemplate = require("../../../../templates/verification.js");
+const verificationTemplate = require("@/templates/verification.js");
 
 router.post("/", async (req, res) => {
   if (

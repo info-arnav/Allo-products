@@ -2,8 +2,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 
-const users = require("../../../../controllers/user.controller.js");
-const sessions = require("../../../../controllers/session.controller.js");
+const users = require("@/controllers/user.controller.js");
+const sessions = require("@/controllers/session.controller.js");
 
 router.post("/", async (req, res) => {
   if (

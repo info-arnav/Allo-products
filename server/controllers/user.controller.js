@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("@/models");
 const generator = require("./components/generator");
 const User = db.users;
 const { fn, col, where } = db.Sequelize;

@@ -1,5 +1,5 @@
 const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
-const mailConfig = require("../config/mail.config.js");
+const mailConfig = require("@/config/mail.config.js");
 
 const sesClient = new SESClient({
   region: mailConfig.AWS_REGION,

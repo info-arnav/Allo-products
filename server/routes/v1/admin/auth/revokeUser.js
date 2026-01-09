@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const verifications = require("../../../../controllers/verification.controller.js");
-const users = require("../../../../controllers/user.controller.js");
+const verifications = require("@/controllers/verification.controller.js");
+const users = require("@/controllers/user.controller.js");
 
 router.post("/", async (req, res) => {
   if (!req.body.code || !req.body.user) {

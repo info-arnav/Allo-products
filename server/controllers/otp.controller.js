@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("@/models");
 const Otp = db.otps;
 const { fn, col, where } = db.Sequelize;
 

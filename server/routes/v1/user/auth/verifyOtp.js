@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const otps = require("../../../../controllers/otp.controller.js");
-const sessions = require("../../../../controllers/session.controller.js");
-const users = require("../../../../controllers/user.controller.js");
+const otps = require("@/controllers/otp.controller.js");
+const sessions = require("@/controllers/session.controller.js");
+const users = require("@/controllers/user.controller.js");
 
 router.post("/", async (req, res) => {
   if (!req.body.number || !req.body.otp || !req.headers["x-device-id"]) {

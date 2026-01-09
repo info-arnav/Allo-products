@@ -1,4 +1,4 @@
-const tw = require("../config/twillio.config.js");
+const tw = require("@/config/twillio.config.js");
 
 const sendMessage = async (number, message) => {
   await tw.messages.create({

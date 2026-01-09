@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("@/models");
 const generator = require("./components/generator");
 const jwt = require("jsonwebtoken");
 const getSecret = require("./components/getSecret");

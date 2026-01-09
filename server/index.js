@@ -1,4 +1,5 @@
 "use strict";
+require("module-alias/register");
 require("dotenv").config();
 const express = require("express");
 const { RateLimiterRedis } = require("rate-limiter-flexible");
