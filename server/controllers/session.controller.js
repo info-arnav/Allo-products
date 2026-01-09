@@ -221,7 +221,11 @@ exports.validateAccessTokenWithDeviceId = async (
   }
 };
 
-exports.updateAccessTokenWithDeviceId = async (refresh_token, device_id) => {
+exports.updateAccessTokenWithDeviceId = async (
+  refresh_token,
+  device_id,
+  scope = "user"
+) => {
   if (!refresh_token || !device_id) {
     return { error: true, message: "Some details are missing" };
   }
@@ -231,6 +235,7 @@ exports.updateAccessTokenWithDeviceId = async (refresh_token, device_id) => {
       [Op.and]: [
         where(col("refresh_token"), "=", refresh_token),
         where(col("device_id"), "=", device_id),
+        where(col("scope"), "=", scope),
       ],
     },
   };
@@ -262,7 +267,8 @@ exports.updateAccessTokenWithDeviceId = async (refresh_token, device_id) => {
 exports.updateAccessTokenWithFingerPrint = async (
   refresh_token,
   fingerprint,
-  oldFingerprint
+  oldFingerprint,
+  scope = "user"
 ) => {
   if (!refresh_token || !fingerprint || !oldFingerprint) {
     return { error: true, message: "Some details are missing" };
@@ -273,6 +279,7 @@ exports.updateAccessTokenWithFingerPrint = async (
       [Op.and]: [
         where(col("refresh_token"), "=", refresh_token),
         where(col("fingerprint"), "=", oldFingerprint),
+        where(col("scope"), "=", scope),
       ],
     },
   };

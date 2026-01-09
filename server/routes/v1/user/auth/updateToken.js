@@ -17,7 +17,8 @@ router.post("/", async (req, res) => {
 
   let data = await sessions.updateAccessTokenWithDeviceId(
     refresh_token,
-    deviceId
+    deviceId,
+    "user"
   );
 
   if (data.error) {

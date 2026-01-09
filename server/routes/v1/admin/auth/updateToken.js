@@ -23,7 +23,8 @@ router.post("/", async (req, res) => {
   let data = await sessions.updateAccessTokenWithFingerPrint(
     refresh_token,
     fingerprint,
-    oldFingerprint
+    oldFingerprint,
+    "admin"
   );
 
   if (data.error) {
