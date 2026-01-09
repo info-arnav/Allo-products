@@ -1,5 +1,6 @@
 "use strict";
 require("dotenv").config();
+require("module-alias/register");
 const db = require("@/models");
 
 const syncDb = async () => {
