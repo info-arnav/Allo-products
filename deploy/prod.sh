@@ -20,14 +20,19 @@ ENV=production npm run sync
 rm .env
 cd ..
 
-# Load build env into shell for compose
+# Build and deploy one service at a time to avoid RAM issues
+docker compose -f docker-compose.production.yml up -d --build --no-deps backend
+
+# Load website env vars and build
 set -a
 source /etc/allo/websites/main/.env.production
 set +a
-
-# Build and deploy one service at a time to avoid RAM issues
-docker compose -f docker-compose.production.yml up -d --build --no-deps backend
 docker compose -f docker-compose.production.yml up -d --build --no-deps website
+
+# Load admin env vars and build
+set -a
+source /etc/allo/websites/admin/.env.production
+set +a
 docker compose -f docker-compose.production.yml up -d --build --no-deps admin
 
 # Clean up old images
