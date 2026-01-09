@@ -29,8 +29,7 @@ cp /etc/allo/websites/main/.env.production websites/main/.env.production
 cp /etc/allo/websites/admin/.env.production websites/admin/.env.production
 
 # Export NEXT_PUBLIC_* variables for docker build
-export $(grep "^NEXT_PUBLIC_" /etc/allo/websites/main/.env.production | sed 's/$/_PRODUCTION/' | xargs)
-export $(grep "^NEXT_PUBLIC_" /etc/allo/websites/admin/.env.production | sed 's/$/_PRODUCTION/' | xargs)
+export $(grep "^NEXT_PUBLIC_" /etc/allo/websites/main/.env.production | xargs)
 
 docker compose -f docker-compose.production.yml up -d --build --no-deps backend
 docker compose -f docker-compose.production.yml up -d --build --no-deps website
